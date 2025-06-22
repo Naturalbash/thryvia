@@ -1,0 +1,54 @@
+.habit-tracker {
+  transition: all 0.3s ease;
+}
+
+.habit-item {
+  transition: all 0.3s ease;
+}
+
+.habit-item:hover {
+  transform: translateY(-2px);
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #f3f4f6;
+}
+
+.habit-item.completed {
+  background-color: #f0fdf4;
+  border-left-color: #22c55e;
+}
+
+.habit-item.completed .text-gray-800 {
+  color: #15803d;
+}
+
+.tab-transition {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tab-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.tab-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tab-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tab-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+}
