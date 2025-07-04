@@ -7,13 +7,14 @@ import ProjectsTab from "./projects-tab";
 import ResourcesTab from "./resources-tab";
 import { AdminDashboardProvider } from "./admin-dashboard-context";
 import { fetchALlProjects } from "@/server/project.action";
+import { fetchWorkers } from "./database";
 
 export default async function AdminDashboard() {
   const projects = await fetchALlProjects();
-  console.log(projects);
+  const workers = await fetchWorkers();
 
   return (
-    <AdminDashboardProvider projects={projects}>
+    <AdminDashboardProvider projects={projects} workers={workers}>
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <AdminDashboardHeader />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

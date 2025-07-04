@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import {
-  initialWorkers,
   Worker,
   Project,
   Habit,
@@ -24,11 +23,12 @@ import {
   Task,
 } from "./data";
 import { useAdminDashboardContext } from "./admin-dashboard-context";
+import { addProject } from "./database";
 
 export function useAdminDashboard() {
   const context = useAdminDashboardContext();
   const [projects, setProjects] = useState<Project[]>(context.projects);
-  const [workers] = useState<Worker[]>(initialWorkers);
+  const [workers] = useState<Worker[]>(context.workers);
   const [habits, setHabits] = useState<Habit[]>(initialHabits);
   const [resources, setResources] = useState<Resource[]>(initialResources);
 
@@ -167,6 +167,14 @@ export function useAdminDashboard() {
         created_at: new Date().toISOString(),
       };
       setProjects((prev) => [...prev, newProject]);
+
+      addProject({
+        title: projectForm.title,
+        status: projectForm.status,
+        description: projectForm.description,
+        due_date: new Date(projectForm.due_date),
+        user_id: projectForm.workerId,
+      });
     }
 
     setIsProjectModalOpen(false);
@@ -314,13 +322,13 @@ export function useAdminDashboard() {
         return {
           color: "bg-gray-100 text-gray-800",
           icon: Clock,
-          label: "Not Started",
+          label: "At Risk",
         };
       case "On going":
         return {
           color: "bg-blue-100 text-blue-800",
           icon: AlertCircle,
-          label: "In Progress",
+          label: "On Going",
         };
       case "Completed":
         return {
@@ -332,7 +340,7 @@ export function useAdminDashboard() {
         return {
           color: "bg-yellow-100 text-yellow-800",
           icon: Pause,
-          label: "On Hold",
+          label: "Delayed",
         };
       default:
         return {

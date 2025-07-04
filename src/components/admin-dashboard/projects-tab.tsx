@@ -132,10 +132,10 @@ export default function ProjectsTab() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="At risk">Not Started</SelectItem>
-              <SelectItem value="in-progress">In Progress</SelectItem>
+              <SelectItem value="At risk">At Risk</SelectItem>
+              <SelectItem value="On going">On Going</SelectItem>
               <SelectItem value="Completed">Completed</SelectItem>
-              <SelectItem value="on-hold">On Hold</SelectItem>
+              <SelectItem value="Delayed">Delayed</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -224,10 +224,10 @@ export default function ProjectsTab() {
                         <SelectValue placeholder="Select status" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="At risk">Not Started</SelectItem>
-                        <SelectItem value="in-progress">In Progress</SelectItem>
+                        <SelectItem value="At risk">At Risk</SelectItem>
+                        <SelectItem value="On going">On Going</SelectItem>
                         <SelectItem value="Completed">Completed</SelectItem>
-                        <SelectItem value="on-hold">On Hold</SelectItem>
+                        <SelectItem value="Delayed">Delayed</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

@@ -19,7 +19,7 @@ export interface IProject {
   due_date: Date;
   status: "Completed" | "Delayed" | "On going" | "At risk";
   color: string;
-  user: string;
+  user_id: string;
 }
 
 export interface ITask {

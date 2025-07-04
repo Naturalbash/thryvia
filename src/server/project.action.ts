@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 import { IProject } from "@/interfaces";
 import { createClient } from "@/utils/supabase/server";
@@ -20,9 +21,11 @@ export async function fetchUserProjects(
 export async function fetchALlProjects() {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from("projects").select("*");
+  const { data, error } = await supabase.from("projects").select("*, tasks(*)");
 
   if (error) throw new Error(`Error getting user projects`);
+
+  console.log(data);
 
   const shapedData = data.map((p) => ({
     id: p.id,
@@ -31,7 +34,13 @@ export async function fetchALlProjects() {
     due_date: p.due_date,
     status: p.status,
     workerId: p.user_id,
-    tasks: [],
+    tasks: p.tasks.map((t: any) => ({
+      id: t.id,
+      title: t.title,
+      description: t.description,
+      created_at: t.created_at,
+      status: t.completed ? "Completed" : "pending",
+    })),
     created_at: p.created_at,
   }));
 

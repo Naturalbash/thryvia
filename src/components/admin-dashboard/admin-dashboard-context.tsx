@@ -1,6 +1,13 @@
 "use client";
 import React, { createContext, useContext } from "react";
-import { Task } from "./data";
+
+export interface Task {
+  id: string;
+  title: string;
+  description: string;
+  status: "pending" | "in-progress" | "Completed";
+  created_at: string;
+}
 
 export interface Project {
   id: number;
@@ -13,25 +20,37 @@ export interface Project {
   created_at: string;
 }
 
+export interface Worker {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+  skills: string[];
+}
+
 interface IAdminDashboardContext {
   projects: Project[];
+  workers: Worker[];
 }
 
 const AdminDashboardContext = createContext<IAdminDashboardContext>({
   projects: [],
+  workers: [],
 });
 
 interface AdminDashboardProviderProps {
   children: React.ReactNode;
   projects: Project[];
+  workers: Worker[];
 }
 
 function AdminDashboardProvider({
   children,
   projects,
+  workers,
 }: AdminDashboardProviderProps) {
   return (
-    <AdminDashboardContext.Provider value={{ projects }}>
+    <AdminDashboardContext.Provider value={{ projects, workers }}>
       {children}
     </AdminDashboardContext.Provider>
   );
