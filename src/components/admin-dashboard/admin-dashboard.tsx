@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -37,660 +37,103 @@ import {
   Calendar,
   User,
   CheckCircle,
-  Clock,
   AlertCircle,
-  Pause,
   Edit3,
   Trash2,
   Users,
   FolderOpen,
-  //   Heart,
   BookOpen,
-  Video,
-  Headphones,
   Target,
   Link,
   Activity,
-  Brain,
-  //   Smile,
 } from "lucide-react";
+import { useAdminDashboard } from "./use-admin-dashboard";
+import { Habit, Project, Resource, Task, Worker } from "./data";
+import AdminDashboardHeader from "./admin-dashboard-header";
 
 // Types
-interface Worker {
-  id: string;
-  name: string;
-  email: string;
-  avatar: string;
-  skills: string[];
-}
-
-interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: "pending" | "in-progress" | "completed";
-  createdAt: string;
-}
-
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  dueDate: string;
-  status: "not-started" | "on going" | "completed" | "delayed";
-  workerId: string;
-  tasks: Task[];
-  createdAt: string;
-}
-
-interface Habit {
-  id: string;
-  title: string;
-  description: string;
-  category: "physical" | "mental" | "social" | "productivity";
-  frequency: "daily" | "weekly" | "monthly";
-  createdAt: string;
-}
-
-interface Resource {
-  id: string;
-  title: string;
-  description: string;
-  type: "article" | "video" | "podcast";
-  url: string;
-  category:
-    | "stress-management"
-    | "productivity"
-    | "mindfulness"
-    | "work-life-balance"
-    | "communication";
-  createdAt: string;
-}
-
-// Sample data
-const initialWorkers: Worker[] = [
-  {
-    id: "1",
-    name: "Sarah Johnson",
-    email: "sarah@company.com",
-    avatar: "SJ",
-    skills: ["React", "TypeScript", "Node.js"],
-  },
-  {
-    id: "2",
-    name: "Michael Chen",
-    email: "michael@company.com",
-    avatar: "MC",
-    skills: ["Python", "Django", "PostgreSQL"],
-  },
-  {
-    id: "3",
-    name: "Emily Rodriguez",
-    email: "emily@company.com",
-    avatar: "ER",
-    skills: ["UI/UX", "Figma", "Frontend"],
-  },
-  {
-    id: "4",
-    name: "David Kim",
-    email: "david@company.com",
-    avatar: "DK",
-    skills: ["DevOps", "AWS", "Docker"],
-  },
-];
-
-const initialProjects: Project[] = [
-  {
-    id: "1",
-    title: "E-commerce Platform Redesign",
-    description:
-      "Complete redesign of the company e-commerce platform with modern UI/UX",
-    dueDate: "2024-02-15",
-    status: "on going",
-    workerId: "1",
-    createdAt: "2024-01-01",
-    tasks: [
-      {
-        id: "1",
-        title: "Create wireframes",
-        description: "Design low-fidelity wireframes for main pages",
-        status: "completed",
-        createdAt: "2024-01-02",
-      },
-      {
-        id: "2",
-        title: "Implement responsive header",
-        description: "Build responsive navigation header component",
-        status: "in-progress",
-        createdAt: "2024-01-05",
-      },
-      {
-        id: "3",
-        title: "Product catalog page",
-        description: "Develop product listing and filtering functionality",
-        status: "pending",
-        createdAt: "2024-01-08",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "API Integration Service",
-    description: "Build microservice for third-party API integrations",
-    dueDate: "2024-01-30",
-    status: "completed",
-    workerId: "2",
-    createdAt: "2024-01-01",
-    tasks: [
-      {
-        id: "4",
-        title: "API documentation",
-        description: "Document all API endpoints and responses",
-        status: "completed",
-        createdAt: "2024-01-03",
-      },
-      {
-        id: "5",
-        title: "Authentication middleware",
-        description: "Implement JWT authentication for API access",
-        status: "completed",
-        createdAt: "2024-01-10",
-      },
-    ],
-  },
-];
-
-const initialHabits: Habit[] = [
-  {
-    id: "1",
-    title: "Morning Meditation",
-    description: "10 minutes of mindfulness meditation to start the day",
-    category: "mental",
-    frequency: "daily",
-    createdAt: "2024-01-01",
-  },
-  {
-    id: "2",
-    title: "Daily Exercise",
-    description: "30 minutes of physical activity (walking, yoga, or workout)",
-    category: "physical",
-    frequency: "daily",
-    createdAt: "2024-01-01",
-  },
-  {
-    id: "3",
-    title: "Team Check-in",
-    description:
-      "Connect with at least one team member for non-work conversation",
-    category: "social",
-    frequency: "daily",
-    createdAt: "2024-01-01",
-  },
-  {
-    id: "4",
-    title: "Deep Work Session",
-    description: "2-hour focused work session without distractions",
-    category: "productivity",
-    frequency: "daily",
-    createdAt: "2024-01-01",
-  },
-];
-
-const initialResources: Resource[] = [
-  {
-    id: "1",
-    title: "Managing Remote Work Stress",
-    description:
-      "Comprehensive guide on identifying and managing stress in remote work environments",
-    type: "article",
-    url: "https://example.com/remote-stress-management",
-    category: "stress-management",
-    createdAt: "2024-01-01",
-  },
-  {
-    id: "2",
-    title: "Productivity Techniques for Remote Workers",
-    description:
-      "Video series covering Pomodoro, time-blocking, and other productivity methods",
-    type: "video",
-    url: "https://example.com/productivity-techniques",
-    category: "productivity",
-    createdAt: "2024-01-01",
-  },
-  {
-    id: "3",
-    title: "Mindful Remote Work Podcast",
-    description:
-      "Weekly podcast discussing mindfulness practices for remote professionals",
-    type: "podcast",
-    url: "https://example.com/mindful-remote-podcast",
-    category: "mindfulness",
-    createdAt: "2024-01-01",
-  },
-  {
-    id: "4",
-    title: "Work-Life Balance in Digital Age",
-    description:
-      "Research-based article on maintaining healthy boundaries while working remotely",
-    type: "article",
-    url: "https://example.com/work-life-balance",
-    category: "work-life-balance",
-    createdAt: "2024-01-01",
-  },
-];
 
 export default function AdminDashboard() {
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
-  const [workers] = useState<Worker[]>(initialWorkers);
-  const [habits, setHabits] = useState<Habit[]>(initialHabits);
-  const [resources, setResources] = useState<Resource[]>(initialResources);
+  const {
+    workers,
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState<string>("all");
-  const [habitSearchTerm, setHabitSearchTerm] = useState("");
-  const [resourceSearchTerm, setResourceSearchTerm] = useState("");
-  const [resourceTypeFilter, setResourceTypeFilter] = useState<string>("all");
+    searchTerm,
+    filterStatus,
+    habitSearchTerm,
+    resourceSearchTerm,
+    resourceTypeFilter,
 
-  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
-  const [isHabitModalOpen, setIsHabitModalOpen] = useState(false);
-  const [isResourceModalOpen, setIsResourceModalOpen] = useState(false);
+    isProjectModalOpen,
+    isTaskModalOpen,
+    isHabitModalOpen,
+    isResourceModalOpen,
 
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [editingProject, setEditingProject] = useState<Project | null>(null);
-  const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
-  const [editingResource, setEditingResource] = useState<Resource | null>(null);
+    editingProject,
+    editingHabit,
+    editingResource,
 
-  // Project form state
-  const [projectForm, setProjectForm] = useState({
-    title: "",
-    description: "",
-    dueDate: "",
-    status: "not-started" as Project["status"],
-    workerId: "",
-  });
+    projectForm,
+    taskForm,
+    habitForm,
+    resourceForm,
 
-  // Task form state
-  const [taskForm, setTaskForm] = useState({
-    title: "",
-    description: "",
-    status: "pending" as Task["status"],
-  });
+    filteredProjects,
+    filteredHabits,
+    filteredResources,
 
-  // Habit form state
-  const [habitForm, setHabitForm] = useState({
-    title: "",
-    description: "",
-    category: "mental" as Habit["category"],
-    frequency: "daily" as Habit["frequency"],
-  });
+    projectStats,
+    wellbeingStats,
 
-  // Resource form state
-  const [resourceForm, setResourceForm] = useState({
-    title: "",
-    description: "",
-    type: "article" as Resource["type"],
-    url: "",
-    category: "stress-management" as Resource["category"],
-  });
+    setSearchTerm,
+    setFilterStatus,
+    setHabitSearchTerm,
+    setResourceSearchTerm,
+    setResourceTypeFilter,
 
-  // Filter functions
-  const filteredProjects = projects.filter((project) => {
-    const matchesSearch =
-      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus =
-      filterStatus === "all" || project.status === filterStatus;
-    return matchesSearch && matchesStatus;
-  });
+    setIsProjectModalOpen,
+    setIsTaskModalOpen,
+    setIsHabitModalOpen,
+    setIsResourceModalOpen,
 
-  const filteredHabits = habits.filter(
-    (habit) =>
-      habit.title.toLowerCase().includes(habitSearchTerm.toLowerCase()) ||
-      habit.description.toLowerCase().includes(habitSearchTerm.toLowerCase())
-  );
+    setSelectedProject,
 
-  const filteredResources = resources.filter((resource) => {
-    const matchesSearch =
-      resource.title.toLowerCase().includes(resourceSearchTerm.toLowerCase()) ||
-      resource.description
-        .toLowerCase()
-        .includes(resourceSearchTerm.toLowerCase());
-    const matchesType =
-      resourceTypeFilter === "all" || resource.type === resourceTypeFilter;
-    return matchesSearch && matchesType;
-  });
+    setProjectForm,
+    setTaskForm,
+    setHabitForm,
+    setResourceForm,
 
-  // Reset forms
-  const resetProjectForm = () => {
-    setProjectForm({
-      title: "",
-      description: "",
-      dueDate: "",
-      status: "not-started",
-      workerId: "",
-    });
-    setEditingProject(null);
-  };
+    // Form Handlers
+    handleProjectSubmit,
+    handleTaskSubmit,
+    handleHabitSubmit,
+    handleResourceSubmit,
 
-  const resetTaskForm = () => {
-    setTaskForm({
-      title: "",
-      description: "",
-      status: "pending",
-    });
-  };
+    // Reset Handlers
+    resetProjectForm,
+    resetTaskForm,
+    resetHabitForm,
+    resetResourceForm,
 
-  const resetHabitForm = () => {
-    setHabitForm({
-      title: "",
-      description: "",
-      category: "mental",
-      frequency: "daily",
-    });
-    setEditingHabit(null);
-  };
+    // Edit Handlers
+    handleEditProject,
+    handleEditHabit,
+    handleEditResource,
 
-  const resetResourceForm = () => {
-    setResourceForm({
-      title: "",
-      description: "",
-      type: "article",
-      url: "",
-      category: "stress-management",
-    });
-    setEditingResource(null);
-  };
+    // Delete Handlers
+    handleDeleteProject,
+    handleDeleteHabit,
+    handleDeleteResource,
 
-  // Handle submissions
-  const handleProjectSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    // Task Status Handler
+    handleTaskStatusUpdate,
 
-    if (editingProject) {
-      setProjects((prev) =>
-        prev.map((p) =>
-          p.id === editingProject.id ? { ...p, ...projectForm } : p
-        )
-      );
-    } else {
-      const newProject: Project = {
-        id: Date.now().toString(),
-        ...projectForm,
-        tasks: [],
-        createdAt: new Date().toISOString(),
-      };
-      setProjects((prev) => [...prev, newProject]);
-    }
-
-    setIsProjectModalOpen(false);
-    resetProjectForm();
-  };
-
-  const handleTaskSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (selectedProject) {
-      const newTask: Task = {
-        id: Date.now().toString(),
-        ...taskForm,
-        createdAt: new Date().toISOString(),
-      };
-
-      setProjects((prev) =>
-        prev.map((p) =>
-          p.id === selectedProject.id
-            ? { ...p, tasks: [...p.tasks, newTask] }
-            : p
-        )
-      );
-    }
-
-    setIsTaskModalOpen(false);
-    resetTaskForm();
-  };
-
-  const handleHabitSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (editingHabit) {
-      setHabits((prev) =>
-        prev.map((h) => (h.id === editingHabit.id ? { ...h, ...habitForm } : h))
-      );
-    } else {
-      const newHabit: Habit = {
-        id: Date.now().toString(),
-        ...habitForm,
-        createdAt: new Date().toISOString(),
-      };
-      setHabits((prev) => [...prev, newHabit]);
-    }
-
-    setIsHabitModalOpen(false);
-    resetHabitForm();
-  };
-
-  const handleResourceSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (editingResource) {
-      setResources((prev) =>
-        prev.map((r) =>
-          r.id === editingResource.id ? { ...r, ...resourceForm } : r
-        )
-      );
-    } else {
-      const newResource: Resource = {
-        id: Date.now().toString(),
-        ...resourceForm,
-        createdAt: new Date().toISOString(),
-      };
-      setResources((prev) => [...prev, newResource]);
-    }
-
-    setIsResourceModalOpen(false);
-    resetResourceForm();
-  };
-
-  // Handle edits
-  const handleEditProject = (project: Project) => {
-    setEditingProject(project);
-    setProjectForm({
-      title: project.title,
-      description: project.description,
-      dueDate: project.dueDate,
-      status: project.status,
-      workerId: project.workerId,
-    });
-    setIsProjectModalOpen(true);
-  };
-
-  const handleEditHabit = (habit: Habit) => {
-    setEditingHabit(habit);
-    setHabitForm({
-      title: habit.title,
-      description: habit.description,
-      category: habit.category,
-      frequency: habit.frequency,
-    });
-    setIsHabitModalOpen(true);
-  };
-
-  const handleEditResource = (resource: Resource) => {
-    setEditingResource(resource);
-    setResourceForm({
-      title: resource.title,
-      description: resource.description,
-      type: resource.type,
-      url: resource.url,
-      category: resource.category,
-    });
-    setIsResourceModalOpen(true);
-  };
-
-  // Handle deletes
-  const handleDeleteProject = (projectId: string) => {
-    setProjects((prev) => prev.filter((p) => p.id !== projectId));
-  };
-
-  const handleDeleteHabit = (habitId: string) => {
-    setHabits((prev) => prev.filter((h) => h.id !== habitId));
-  };
-
-  const handleDeleteResource = (resourceId: string) => {
-    setResources((prev) => prev.filter((r) => r.id !== resourceId));
-  };
-
-  // Handle task status update
-  const handleTaskStatusUpdate = (
-    projectId: string,
-    taskId: string,
-    newStatus: Task["status"]
-  ) => {
-    setProjects((prev) =>
-      prev.map((p) =>
-        p.id === projectId
-          ? {
-              ...p,
-              tasks: p.tasks.map((t) =>
-                t.id === taskId ? { ...t, status: newStatus } : t
-              ),
-            }
-          : p
-      )
-    );
-  };
-
-  // Utility functions
-  const getStatusInfo = (status: Project["status"]) => {
-    switch (status) {
-      case "not-started":
-        return {
-          color: "bg-gray-100 text-gray-800",
-          icon: Clock,
-          label: "Not Started",
-        };
-      case "on going":
-        return {
-          color: "bg-blue-100 text-blue-800",
-          icon: AlertCircle,
-          label: "In Progress",
-        };
-      case "completed":
-        return {
-          color: "bg-green-100 text-green-800",
-          icon: CheckCircle,
-          label: "Completed",
-        };
-      case "delayed":
-        return {
-          color: "bg-yellow-100 text-yellow-800",
-          icon: Pause,
-          label: "On Hold",
-        };
-      default:
-        return {
-          color: "bg-gray-100 text-gray-800",
-          icon: Clock,
-          label: "Unknown",
-        };
-    }
-  };
-
-  const getTaskStatusInfo = (status: Task["status"]) => {
-    switch (status) {
-      case "pending":
-        return { color: "bg-gray-100 text-gray-800", label: "Pending" };
-      case "in-progress":
-        return { color: "bg-blue-100 text-blue-800", label: "In Progress" };
-      case "completed":
-        return { color: "bg-green-100 text-green-800", label: "Completed" };
-      default:
-        return { color: "bg-gray-100 text-gray-800", label: "Unknown" };
-    }
-  };
-
-  const getCategoryInfo = (category: Habit["category"]) => {
-    switch (category) {
-      case "physical":
-        return {
-          color: "bg-green-100 text-green-800",
-          icon: Activity,
-          label: "Physical",
-        };
-      case "mental":
-        return {
-          color: "bg-purple-100 text-purple-800",
-          icon: Brain,
-          label: "Mental",
-        };
-      case "social":
-        return {
-          color: "bg-blue-100 text-blue-800",
-          icon: Users,
-          label: "Social",
-        };
-      case "productivity":
-        return {
-          color: "bg-orange-100 text-orange-800",
-          icon: Target,
-          label: "Productivity",
-        };
-      default:
-        return {
-          color: "bg-gray-100 text-gray-800",
-          icon: Activity,
-          label: "Unknown",
-        };
-    }
-  };
-
-  const getResourceTypeInfo = (type: Resource["type"]) => {
-    switch (type) {
-      case "article":
-        return {
-          color: "bg-blue-100 text-blue-800",
-          icon: BookOpen,
-          label: "Article",
-        };
-      case "video":
-        return {
-          color: "bg-red-100 text-red-800",
-          icon: Video,
-          label: "Video",
-        };
-      case "podcast":
-        return {
-          color: "bg-green-100 text-green-800",
-          icon: Headphones,
-          label: "Podcast",
-        };
-      default:
-        return {
-          color: "bg-gray-100 text-gray-800",
-          icon: BookOpen,
-          label: "Unknown",
-        };
-    }
-  };
-
-  const getWorkerById = (workerId: string) => {
-    return workers.find((w) => w.id === workerId);
-  };
-
-  // Calculate stats
-  const projectStats = {
-    total: projects.length,
-    completed: projects.filter((p) => p.status === "completed").length,
-    inProgress: projects.filter((p) => p.status === "on going").length,
-    onHold: projects.filter((p) => p.status === "delayed").length,
-  };
-
-  const wellbeingStats = {
-    totalHabits: habits.length,
-    totalResources: resources.length,
-    dailyHabits: habits.filter((h) => h.frequency === "daily").length,
-    articles: resources.filter((r) => r.type === "article").length,
-  };
+    // Utility Functions
+    getStatusInfo,
+    getTaskStatusInfo,
+    getCategoryInfo,
+    getResourceTypeInfo,
+    getWorkerById,
+  } = useAdminDashboard();
 
   function ProjectCard({
     project,
@@ -756,7 +199,7 @@ export default function AdminDashboard() {
           </CardDescription>
 
           <div className="space-y-3 mb-4">
-            <div className="flex items-center items-center gap-2 text-sm text-gray-600">
+            <div className="flex items-center gap-2 text-sm text-gray-600">
               <Calendar className="h-4 w-4" />
               Due: {formattedDueDate || project.dueDate}
             </div>
@@ -967,25 +410,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Admin Dashboard
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Manage remote work projects and team wellbeing
-              </p>
-            </div>
-            <div className="flex items-center gap-2 cursor-pointer">
-              <div className="w-10 h-10 bg-gradient-to-r from-slate-500 to-slate-800 rounded-full flex items-center justify-center">
-                <User className="h-5 w-5 text-white" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AdminDashboardHeader />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="projects" className="space-y-8">
@@ -1252,9 +677,7 @@ export default function AdminDashboard() {
             {/* Projects Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredProjects.map((project) => {
-                const statusInfo = getStatusInfo(project.status);
                 const worker = getWorkerById(project.workerId);
-                const StatusIcon = statusInfo.icon;
 
                 return (
                   <ProjectCard
