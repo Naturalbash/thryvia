@@ -1,24 +1,18 @@
 import { MentorDashboard } from "@/components/mentor-dashboard/mentor-dashboard";
 import { Metadata } from "next";
 import "../dashboard/thryvia.css";
-
-const mockMentor = {
-  id: "m1",
-  name: "Dr. Lisa Raymond",
-  avatar: "/dave.jpg",
-  title: "Senior Career Coach",
-  isOnline: true,
-  lastSeen: "two weeks ago",
-};
+import { getCurrentUser } from "@/server/auth.action";
 
 export const metadata: Metadata = {
   title: "Mentor Dashboard",
 };
 
-export default function Page() {
+export default async function Page() {
+  const user = await getCurrentUser();
+  console.log("Current User:", user);
   return (
     <div>
-      <MentorDashboard currentMentor={mockMentor} />
+      <MentorDashboard currentMentor={user} />
     </div>
   );
 }

@@ -11,69 +11,84 @@ import Image from "next/image";
 import { User } from "lucide-react";
 import { ChatInterface } from "../mentorship/chat-interface";
 import toast from "react-hot-toast";
-
-export interface User {
-  id: string;
-  name: string;
-  title?: string;
-  avatar: string;
-  status?: "online" | "offline";
-  lastActive?: Date;
-  lastMessage?: string;
-  unreadCount?: number;
-}
+import { IUser } from "@/interfaces";
 
 interface Message {
-  id: string;
+  id: number;
   sender_id: string;
   recipient_id: string;
   content: string;
-  timestamp: Date;
+  created_at: Date;
+  chat_session_id: string;
 }
 
 interface MentorDashboardProps {
-  currentMentor: User;
+  currentMentor: IUser;
 }
 
 export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
-  const [selectedWorker, setSelectedWorker] = useState<User | null>(null);
-  const [workers, setWorkers] = useState<User[]>([
-    {
-      id: "1",
-      name: "Ibrahim Hassanat",
-      avatar: "/hassanah.jpg",
-      status: "online",
-      lastActive: new Date(),
-    },
-    {
-      id: "2",
-      name: "Umar Muhammed Basheer",
-      avatar: "/muhammed.jpg",
-      status: "offline",
-      lastActive: new Date(Date.now() - 3600000),
-    },
-    {
-      id: "3",
-      name: "Emily Rodriguez",
-      title: "UX Designer",
-      avatar: "/dave.jpg",
-      status: "offline",
-      lastActive: new Date(Date.now() - 7200000),
-    },
-  ]);
+  const [selectedWorker, setSelectedWorker] = useState<IUser | null>(null);
+  const [workers, setWorkers] = useState<
+    (IUser & { lastMessage: string; unreadCount: number })[]
+  >([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const supabase = createClient();
 
+  console.log("Current Mentor:", currentMentor);
+
   // Memoize fetchMessages to prevent re-creation
+
+  useEffect(() => {
+    const fetchWorkers = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("users")
+          .select("*")
+          .eq("role", "worker")
+          .order("last_seen", { ascending: false });
+
+        if (error) {
+          console.error("Error fetching workers:", error);
+          toast.error("Failed to fetch workers. Please try again.");
+          return;
+        }
+
+        const formattedWorkers: (IUser & {
+          lastMessage: string;
+          unreadCount: number;
+        })[] =
+          data?.map((worker) => ({
+            id: worker.id,
+            created_at: worker.created_at,
+            email: worker.email,
+            role: worker.role,
+            occupation: worker.occupation,
+            first_name: worker.first_name,
+            last_name: worker.last_name,
+            avatar_url: worker.avatar_url,
+            status: worker.status,
+            last_seen: new Date(worker.last_seen),
+            lastMessage: "",
+            unreadCount: 0,
+          })) || [];
+
+        setWorkers(formattedWorkers);
+      } catch (error) {
+        console.error("Error fetching workers:", error);
+        toast.error("Failed to fetch workers. Please try again.");
+      }
+    };
+
+    fetchWorkers();
+  }, [currentMentor.id, supabase]);
+
   const fetchMessages = useCallback(
     async (workerId: string) => {
       const { data, error } = await supabase
-        .from("messages")
+        .from("chat_messages")
         .select("*")
-        .or(
-          `and(sender_id.eq.${currentMentor.id},recipient_id.eq.${workerId}),and(sender_id.eq.${workerId},recipient_id.eq.${currentMentor.id})`
-        )
-        .order("timestamp", { ascending: true });
+        .eq("chat_session_id", `${workerId}-${currentMentor.id}`)
+        .order("created_at", { ascending: true });
 
       if (error) {
         console.error("Error fetching messages:", error);
@@ -87,81 +102,13 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
           sender_id: msg.sender_id,
           recipient_id: msg.recipient_id,
           content: msg.content,
-          timestamp: new Date(msg.timestamp),
+          created_at: new Date(msg.timestamp),
+          chat_session_id: msg.chat_session_id,
         })) || []
       );
     },
-    [currentMentor.id, supabase] // Dependencies for fetchMessages
+    [currentMentor.id, supabase]
   );
-
-  // Update worker list with latest messages and unread counts
-  useEffect(() => {
-    // Skip if no workers or currentMentor
-    if (!workers.length || !currentMentor.id) return;
-
-    const updateWorkers = async () => {
-      const updatedWorkers = await Promise.all(
-        workers.map(async (worker) => {
-          const messages = await fetchMessages(worker.id);
-          const lastMessage = messages[messages.length - 1]?.content || "";
-          const unreadCount = messages.filter(
-            (msg) =>
-              msg.sender_id === worker.id &&
-              msg.recipient_id === currentMentor.id
-          ).length;
-          return { ...worker, lastMessage, unreadCount };
-        })
-      );
-      setWorkers(updatedWorkers);
-    };
-
-    updateWorkers();
-  }, [selectedWorker, workers, currentMentor.id, fetchMessages]); // Include all dependencies
-
-  // Real-time subscription to messages
-  useEffect(() => {
-    // Skip if no currentMentor
-    if (!currentMentor.id) return;
-
-    const channel = supabase
-      .channel("messages")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "messages" },
-        async (payload) => {
-          if (
-            payload.new.recipient_id === currentMentor.id ||
-            payload.new.sender_id === currentMentor.id
-          ) {
-            // Update messages for selected worker
-            if (selectedWorker?.id) {
-              const updatedMessages = await fetchMessages(selectedWorker.id);
-              setMessages(updatedMessages);
-            }
-            // Update worker list
-            const updatedWorkers = await Promise.all(
-              workers.map(async (worker) => {
-                const messages = await fetchMessages(worker.id);
-                const lastMessage =
-                  messages[messages.length - 1]?.content || "";
-                const unreadCount = messages.filter(
-                  (msg) =>
-                    msg.sender_id === worker.id &&
-                    msg.recipient_id === currentMentor.id
-                ).length;
-                return { ...worker, lastMessage, unreadCount };
-              })
-            );
-            setWorkers(updatedWorkers);
-          }
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [selectedWorker, workers, currentMentor.id, fetchMessages, supabase]); // Include all dependencies
 
   return (
     <div>
@@ -191,15 +138,19 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
           <div className="p-6 border-b border-gray-200">
             <div className="flex items-center space-x-3">
               <Image
-                src={currentMentor.avatar}
-                alt={currentMentor.name}
+                src={currentMentor.avatar_url || "/dave.jpg"}
+                alt={currentMentor.first_name + " " + currentMentor.last_name}
                 width={50}
                 height={50}
                 className="rounded-full"
               />
               <div>
-                <h2 className="text-lg font-semibold">{currentMentor.name}</h2>
-                <p className="text-sm text-gray-500">{currentMentor.title}</p>
+                <h2 className="text-lg font-semibold">
+                  {currentMentor.first_name + " " + currentMentor.last_name}
+                </h2>
+                <p className="text-sm text-gray-500">
+                  {currentMentor.occupation}
+                </p>
               </div>
             </div>
           </div>
@@ -229,8 +180,8 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                       <div className="flex items-start space-x-3">
                         <div className="relative">
                           <Image
-                            src={worker.avatar}
-                            alt={worker.name}
+                            src={worker.avatar_url || "/default-avatar.png"}
+                            alt={worker.first_name + " " + worker.last_name}
                             width={50}
                             height={50}
                             className="rounded-full"
@@ -246,11 +197,11 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
                             <h3 className="text-sm font-medium">
-                              {worker.name}
+                              {worker.first_name + " " + worker.last_name}
                             </h3>
                             <span className="text-xs text-gray-500">
-                              {worker.lastActive
-                                ? format(worker.lastActive, "h:mm a")
+                              {worker.last_seen
+                                ? format(worker.last_seen, "h:mm a")
                                 : ""}
                             </span>
                           </div>
@@ -283,18 +234,20 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                   >
                     <div className="flex items-start space-x-3">
                       <Image
-                        src={worker.avatar}
-                        alt={worker.name}
+                        src={worker.avatar_url || "/default-avatar.png"}
+                        alt={worker.first_name + " " + worker.last_name}
                         width={50}
                         height={50}
                         className="rounded-full"
                       />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
-                          <h3 className="text-sm font-medium">{worker.name}</h3>
+                          <h3 className="text-sm font-medium">
+                            {worker.first_name + " " + worker.last_name}
+                          </h3>
                           <span className="text-xs text-gray-500">
-                            {worker.lastActive
-                              ? format(worker.lastActive, "MMM d")
+                            {worker.last_seen
+                              ? format(worker.last_seen, "MMM d")
                               : ""}
                           </span>
                         </div>
@@ -376,14 +329,16 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
               <CardContent>
                 <div className="text-center mb-6">
                   <Image
-                    src={selectedWorker.avatar}
-                    alt={selectedWorker.name}
+                    src={selectedWorker.avatar_url || "/default-avatar.png"}
+                    alt={
+                      selectedWorker.first_name + " " + selectedWorker.last_name
+                    }
                     width={100}
                     height={100}
                     className="rounded-full mx-auto mb-3"
                   />
                   <h3 className="text-lg font-semibold">
-                    {selectedWorker.name}
+                    {selectedWorker.first_name + " " + selectedWorker.last_name}
                   </h3>
                   <Badge
                     variant={
@@ -401,8 +356,8 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                       Last Active
                     </h4>
                     <p className="text-sm">
-                      {selectedWorker.lastActive
-                        ? format(selectedWorker.lastActive, "PPP 'at' h:mm a")
+                      {selectedWorker.last_seen
+                        ? format(selectedWorker.last_seen, "PPP 'at' h:mm a")
                         : "Unknown"}
                     </p>
                   </div>

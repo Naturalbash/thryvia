@@ -22,72 +22,108 @@ export default function WorkersChatDashboard() {
   const [currentWorker, setCurrentWorker] = useState<any>();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoadingWorker, setIsLoadingWorker] = useState(true);
+  const [mentors, setMentors] = useState<IUser[]>([]);
   const supabase = createClient();
 
-  const mentors: IUser[] = [
-    {
-      id: "1",
-      email: "thomassmith@gmail.com",
-      first_name: "Thomas",
-      last_name: "Smith",
-      occupation: "Senior Software Engineer",
-      avatar_url: "/dave.jpg",
-      status: "online",
-      created_at: new Date(),
-      last_seen: new Date(),
-      role: "mentor",
-    },
-    {
-      id: "2",
-      email: "janedoe@example.com",
-      first_name: "Jane",
-      last_name: "Doe",
-      occupation: "Product Manager",
-      avatar_url: "/jane.jpg",
-      status: "offline",
-      created_at: new Date(),
-      last_seen: new Date(),
-      role: "mentor",
-    },
-    {
-      id: "3",
-      email: "michaelchen@example.com",
-      first_name: "Michael",
-      last_name: "Chen",
-      occupation: "Data Scientist",
-      avatar_url: "/michael.jpg",
-      status: "online",
-      created_at: new Date(),
-      last_seen: new Date(),
-      role: "mentor",
-    },
-    {
-      id: "4",
-      email: "lindaroberts@example.com",
-      first_name: "Linda",
-      last_name: "Roberts",
-      occupation: "UX Designer",
-      avatar_url: "/linda.jpg",
-      status: "offline",
-      created_at: new Date(),
-      last_seen: new Date(),
-      role: "mentor",
-    },
-    {
-      id: "5",
-      email: "davidnguyen@example.com",
-      first_name: "David",
-      last_name: "Nguyen",
-      occupation: "DevOps Engineer",
-      avatar_url: "/david.jpg",
-      status: "online",
-      created_at: new Date(),
-      last_seen: new Date(),
-      role: "mentor",
-    },
-  ];
+  // const mentors: IUser[] = [
+  //   {
+  //     id: "1",
+  //     email: "thomassmith@gmail.com",
+  //     first_name: "Thomas",
+  //     last_name: "Smith",
+  //     occupation: "Senior Software Engineer",
+  //     avatar_url: "/dave.jpg",
+  //     status: "online",
+  //     created_at: new Date(),
+  //     last_seen: new Date(),
+  //     role: "mentor",
+  //   },
+  //   {
+  //     id: "2",
+  //     email: "janedoe@example.com",
+  //     first_name: "Jane",
+  //     last_name: "Doe",
+  //     occupation: "Product Manager",
+  //     avatar_url: "/jane.jpg",
+  //     status: "offline",
+  //     created_at: new Date(),
+  //     last_seen: new Date(),
+  //     role: "mentor",
+  //   },
+  //   {
+  //     id: "3",
+  //     email: "michaelchen@example.com",
+  //     first_name: "Michael",
+  //     last_name: "Chen",
+  //     occupation: "Data Scientist",
+  //     avatar_url: "/michael.jpg",
+  //     status: "online",
+  //     created_at: new Date(),
+  //     last_seen: new Date(),
+  //     role: "mentor",
+  //   },
+  //   {
+  //     id: "4",
+  //     email: "lindaroberts@example.com",
+  //     first_name: "Linda",
+  //     last_name: "Roberts",
+  //     occupation: "UX Designer",
+  //     avatar_url: "/linda.jpg",
+  //     status: "offline",
+  //     created_at: new Date(),
+  //     last_seen: new Date(),
+  //     role: "mentor",
+  //   },
+  //   {
+  //     id: "5",
+  //     email: "davidnguyen@example.com",
+  //     first_name: "David",
+  //     last_name: "Nguyen",
+  //     occupation: "DevOps Engineer",
+  //     avatar_url: "/david.jpg",
+  //     status: "online",
+  //     created_at: new Date(),
+  //     last_seen: new Date(),
+  //     role: "mentor",
+  //   },
+  // ];
 
   console.log({ currentWorker, selectedMentor, messages });
+
+  useEffect(() => {
+    async function fetchMentors() {
+      try {
+        const { data, error } = await supabase
+          .from("users")
+          .select("*")
+          .eq("role", "mentor");
+
+        if (error) throw error;
+
+        if (data) {
+          const formattedMentors = data.map((mentor: any) => ({
+            id: mentor.id,
+            email: mentor.email,
+            first_name: mentor.first_name,
+            last_name: mentor.last_name,
+            occupation: mentor.occupation,
+            avatar_url: mentor.avatar_url || "/default-avatar.jpg",
+            status: mentor.status || "offline",
+            created_at: new Date(mentor.created_at),
+            last_seen: new Date(mentor.last_seen),
+            role: mentor.role,
+          }));
+          setMentors(formattedMentors);
+          // setSelectedMentor(formattedMentors[0] || null);
+          return formattedMentors;
+        }
+      } catch (error) {
+        console.error("Error fetching mentors:", error);
+        toast.error("Failed to load mentors. Please try again.");
+      }
+    }
+    fetchMentors();
+  }, [supabase]);
 
   // Fetch current worker from Supabase Auth
   useEffect(() => {
