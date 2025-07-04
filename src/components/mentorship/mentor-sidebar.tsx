@@ -1,20 +1,12 @@
+import { IUser } from "@/interfaces";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import Image from "next/image";
 
-export interface User {
-  id: string;
-  name: string;
-  title?: string;
-  avatar: string;
-  status?: "online" | "offline";
-  lastActive?: Date;
-}
-
 interface MentorSidebarProps {
-  mentors: User[];
-  selectedMentor: User | null;
-  onSelectMentor: (mentor: User) => void;
+  mentors: IUser[];
+  selectedMentor: IUser | null;
+  onSelectMentor: (mentor: IUser) => void;
 }
 
 export const MentorSidebar = ({
@@ -45,8 +37,8 @@ export const MentorSidebar = ({
             >
               <div className="relative">
                 <Image
-                  src={mentor.avatar}
-                  alt={mentor.name}
+                  src={mentor.avatar_url}
+                  alt={mentor.first_name + " " + mentor.last_name}
                   width={48}
                   height={48}
                   className="rounded-full object-cover"
@@ -60,12 +52,14 @@ export const MentorSidebar = ({
               </div>
               <div className="ml-3 flex-1 min-w-0">
                 <p className="text-sm font-semibold text-gray-900 truncate">
-                  {mentor.name}
+                  {mentor.first_name} {mentor.last_name}
                 </p>
-                <p className="text-xs text-gray-500 truncate">{mentor.title}</p>
-                {mentor.status !== "online" && mentor.lastActive && (
+                <p className="text-xs text-gray-500 truncate">
+                  {mentor.occupation}
+                </p>
+                {mentor.status !== "online" && mentor.last_seen && (
                   <p className="text-xs text-gray-400">
-                    Last seen {format(mentor.lastActive, "h:mm a")}
+                    Last seen {format(mentor.last_seen, "h:mm a")}
                   </p>
                 )}
               </div>

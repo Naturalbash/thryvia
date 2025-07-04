@@ -1,24 +1,19 @@
+import { IUser } from "@/interfaces";
 import { format } from "date-fns";
 import Image from "next/image";
 
-export interface User {
-  id: string;
-  name: string;
-  title?: string;
-  avatar: string;
-}
-
 interface Message {
-  id: string;
+  id: number;
   sender_id: string;
   recipient_id: string;
   content: string;
-  timestamp: Date;
+  created_at: Date;
+  chat_session_id: string;
 }
 
 interface MessageBubbleProps {
   message: Message;
-  currentUser: User;
+  currentUser: IUser;
   recipientAvatar: string;
 }
 
@@ -39,7 +34,7 @@ export const MessageBubble = ({
             <p className="text-sm">{message.content}</p>
           </div>
           <p className="text-xs text-gray-500 mt-1 text-right">
-            {formatTime(message.timestamp)}
+            {formatTime(message.created_at)}
           </p>
         </div>
       </div>
@@ -60,7 +55,7 @@ export const MessageBubble = ({
           <p className="text-sm text-gray-900">{message.content}</p>
         </div>
         <p className="text-xs text-gray-500 mt-1">
-          {formatTime(message.timestamp)}
+          {formatTime(message.created_at)}
         </p>
       </div>
     </div>

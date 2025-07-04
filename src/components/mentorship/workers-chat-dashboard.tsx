@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -5,55 +6,88 @@ import { createClient } from "@/utils/supabase/client";
 import { MentorSidebar } from "./mentor-sidebar";
 import { ChatInterface } from "./chat-interface";
 import toast from "react-hot-toast";
-
-export interface User {
-  id: string;
-  name: string;
-  title?: string;
-  avatar: string;
-  status?: "online" | "offline";
-  lastActive?: Date;
-}
+import { IUser } from "@/interfaces";
 
 interface Message {
-  id: string;
+  id: number;
+  created_at: Date;
+  content: string;
+  chat_session_id: string;
   sender_id: string;
   recipient_id: string;
-  content: string;
-  timestamp: Date;
 }
 
 export default function WorkersChatDashboard() {
-  const [selectedMentor, setSelectedMentor] = useState<User | null>(null);
-  const [currentWorker, setCurrentWorker] = useState<User | null>(null);
+  const [selectedMentor, setSelectedMentor] = useState<IUser | null>(null);
+  const [currentWorker, setCurrentWorker] = useState<any>();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoadingWorker, setIsLoadingWorker] = useState(true);
   const supabase = createClient();
 
-  const mentors: User[] = [
+  const mentors: IUser[] = [
     {
       id: "1",
-      name: "Thomas Miller",
-      title: "Senior Software Engineer",
-      avatar: "/dave.jpg",
+      email: "thomassmith@gmail.com",
+      first_name: "Thomas",
+      last_name: "Smith",
+      occupation: "Senior Software Engineer",
+      avatar_url: "/dave.jpg",
       status: "online",
+      created_at: new Date(),
+      last_seen: new Date(),
+      role: "mentor",
     },
     {
       id: "2",
-      name: "Marcus Johnson",
-      title: "Product Manager",
-      avatar: "/marcus.jpg",
-      status: "online",
+      email: "janedoe@example.com",
+      first_name: "Jane",
+      last_name: "Doe",
+      occupation: "Product Manager",
+      avatar_url: "/jane.jpg",
+      status: "offline",
+      created_at: new Date(),
+      last_seen: new Date(),
+      role: "mentor",
     },
     {
       id: "3",
-      name: "Emily Rodriguez",
-      title: "UX Designer",
-      avatar: "/emily.jpg",
+      email: "michaelchen@example.com",
+      first_name: "Michael",
+      last_name: "Chen",
+      occupation: "Data Scientist",
+      avatar_url: "/michael.jpg",
+      status: "online",
+      created_at: new Date(),
+      last_seen: new Date(),
+      role: "mentor",
+    },
+    {
+      id: "4",
+      email: "lindaroberts@example.com",
+      first_name: "Linda",
+      last_name: "Roberts",
+      occupation: "UX Designer",
+      avatar_url: "/linda.jpg",
       status: "offline",
-      lastActive: new Date(Date.now() - 7200000),
+      created_at: new Date(),
+      last_seen: new Date(),
+      role: "mentor",
+    },
+    {
+      id: "5",
+      email: "davidnguyen@example.com",
+      first_name: "David",
+      last_name: "Nguyen",
+      occupation: "DevOps Engineer",
+      avatar_url: "/david.jpg",
+      status: "online",
+      created_at: new Date(),
+      last_seen: new Date(),
+      role: "mentor",
     },
   ];
+
+  console.log({ currentWorker, selectedMentor, messages });
 
   // Fetch current worker from Supabase Auth
   useEffect(() => {
@@ -67,13 +101,13 @@ export default function WorkersChatDashboard() {
         if (error) throw error;
 
         if (user) {
-          const worker: User = {
+          const worker = {
             id: user.id,
             name: user.user_metadata?.name || user.email || "Worker",
             avatar: user.user_metadata?.avatar || "/muhammed.jpg",
             status: "online",
             lastActive: new Date(),
-            title: user.user_metadata?.title || undefined,
+            occupation: user.user_metadata?.occupation || undefined,
           };
           setCurrentWorker(worker);
           console.log("Current worker set:", worker);
@@ -111,12 +145,13 @@ export default function WorkersChatDashboard() {
       if (!currentWorker?.id) return [];
 
       const { data, error } = await supabase
-        .from("messages")
+        .from("chat_messages")
         .select("*")
-        .or(
-          `and(sender_id.eq.${currentWorker.id},recipient_id.eq.${mentorId}),and(sender_id.eq.${mentorId},recipient_id.eq.${currentWorker.id})`
-        )
-        .order("timestamp", { ascending: true });
+        .eq("chat_session_id", `${currentWorker.id}-${mentorId}`)
+        // .or(
+        //   `and(sender_id.eq.${currentWorker.id},recipient_id.eq.${mentorId}),and(sender_id.eq.${mentorId},recipient_id.eq.${currentWorker.id})`
+        // )
+        .order("created_at", { ascending: true });
 
       if (error) {
         console.error("Error fetching messages:", error);
@@ -130,7 +165,8 @@ export default function WorkersChatDashboard() {
           sender_id: msg.sender_id,
           recipient_id: msg.recipient_id,
           content: msg.content,
-          timestamp: new Date(msg.timestamp),
+          created_at: new Date(msg.created_at),
+          chat_session_id: msg.chat_session_id,
         })) || []
       );
     },
@@ -145,7 +181,7 @@ export default function WorkersChatDashboard() {
       .channel("messages")
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "messages" },
+        { event: "INSERT", schema: "public", table: "chat_messages" },
         async (payload) => {
           if (
             payload.new.recipient_id === currentWorker.id ||
@@ -177,7 +213,7 @@ export default function WorkersChatDashboard() {
       <MentorSidebar
         mentors={mentors}
         selectedMentor={selectedMentor}
-        onSelectMentor={async (mentor: User) => {
+        onSelectMentor={async (mentor: IUser) => {
           // Explicitly type mentor as User
           setSelectedMentor(mentor);
           const msgs = await fetchMessages(mentor.id);
@@ -191,12 +227,19 @@ export default function WorkersChatDashboard() {
             recipient={selectedMentor}
             messages={messages}
             onSendMessage={async (content: string) => {
-              const { error } = await supabase.from("messages").insert({
+              const msg = {
+                id: Math.floor(Math.random() * 1000000), // Temporary ID, replace with actual ID generation
                 sender_id: currentWorker.id,
                 recipient_id: selectedMentor.id,
                 content,
-                timestamp: new Date().toISOString(),
-              });
+                chat_session_id: `${currentWorker.id}-${selectedMentor.id}`,
+                created_at: new Date(),
+              };
+              setMessages((prev) => [...prev, msg]);
+              const { error } = await supabase
+                .from("chat_messages")
+                .insert(msg);
+
               if (error) {
                 console.error("Error sending message:", error);
                 toast.error("Failed to send message. Please try again.");

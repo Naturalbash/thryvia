@@ -7,6 +7,8 @@ export interface IUser {
   status: "online" | "offline";
   last_seen: Date;
   created_at: Date;
+  role: "worker" | "mentor" | "admin";
+  occupation?: string;
 }
 
 export interface IProject {

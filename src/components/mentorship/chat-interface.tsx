@@ -5,27 +5,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { MessageBubble } from "./message-bubble";
-
-export interface User {
-  id: string;
-  name: string;
-  title?: string;
-  avatar: string;
-  status?: "online" | "offline";
-  lastActive?: Date;
-}
+import { IUser } from "@/interfaces";
 
 interface Message {
-  id: string;
+  id: number;
   sender_id: string;
   recipient_id: string;
   content: string;
-  timestamp: Date;
+  created_at: Date;
+  chat_session_id: string;
 }
 
 interface ChatInterfaceProps {
-  currentUser: User;
-  recipient: User;
+  currentUser: IUser;
+  recipient: IUser;
   messages: Message[];
   onSendMessage: (content: string) => void;
 }
@@ -66,18 +59,18 @@ export const ChatInterface = ({
       {/* Chat Header */}
       <div className="flex items-center p-4 border-b border-gray-200 bg-white">
         <Image
-          src={recipient.avatar}
-          alt={recipient.name}
+          src={recipient.avatar_url}
+          alt={recipient.first_name + " " + recipient.last_name}
           width={40}
           height={40}
           className="rounded-full object-cover"
         />
         <div className="ml-3">
           <h2 className="text-lg font-semibold text-gray-900">
-            {recipient.name}
+            {recipient.first_name} {recipient.last_name}
           </h2>
           <p className="text-sm text-gray-500">
-            {recipient.title || "Remote Worker"}
+            {recipient.role || "Remote Worker"}
           </p>
         </div>
       </div>
@@ -89,7 +82,7 @@ export const ChatInterface = ({
             key={message.id}
             message={message}
             currentUser={currentUser}
-            recipientAvatar={recipient.avatar}
+            recipientAvatar={recipient.avatar_url}
           />
         ))}
         <div ref={messagesEndRef} />
@@ -102,7 +95,7 @@ export const ChatInterface = ({
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder={`Message ${recipient.name}...`}
+            placeholder={`Message ${recipient.first_name} ${recipient.last_name}...`}
             className="flex-1"
           />
           <Button
