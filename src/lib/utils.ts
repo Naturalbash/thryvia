@@ -1,4 +1,4 @@
-import { IProject } from "@/interfaces";
+import { IProject, IUser } from "@/interfaces";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -39,4 +39,15 @@ export function computeProjectStatusStats(projects: IProject[]): StatusStat[] {
   );
 
   return result;
+}
+
+export function getUserDashboardUrl(user: IUser) {
+  if (user.role === "mentor") {
+    return "/mentor-dashboard";
+  } else if (user.role === "worker") {
+    return "/dashboard";
+  } else if (user.role === "admin") {
+    return "/admin-dashboard";
+  }
+  return "/";
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -692,11 +692,23 @@ export default function AdminDashboard() {
     articles: resources.filter((r) => r.type === "article").length,
   };
 
-  function ProjectCard({ project, worker }: { project: Project; worker: Worker | undefined }) {
+  function ProjectCard({
+    project,
+    worker,
+  }: {
+    project: Project;
+    worker: Worker | undefined;
+  }) {
     const [formattedDueDate, setFormattedDueDate] = React.useState("");
     React.useEffect(() => {
       if (project.dueDate) {
-        setFormattedDueDate(new Date(project.dueDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+        setFormattedDueDate(
+          new Date(project.dueDate).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        );
       }
     }, [project.dueDate]);
 
@@ -711,8 +723,10 @@ export default function AdminDashboard() {
               <CardTitle className="text-lg font-semibold mb-2">
                 {project.title}
               </CardTitle>
-              <Badge className={`${getStatusInfo(project.status).color} text-xs`}>
-                <getStatusInfo(project.status).icon className="w-3 h-3 mr-1" />
+              <Badge
+                className={`${getStatusInfo(project.status).color} text-xs`}
+              >
+                {/* <getStatusInfo(project.status).icon className="w-3 h-3 mr-1" /> */}
                 {getStatusInfo(project.status).label}
               </Badge>
             </div>
@@ -762,12 +776,8 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-600">
                 Tasks:{" "}
-                {
-                  project.tasks.filter(
-                    (t) => t.status === "completed"
-                  ).length
-                }
-                /{project.tasks.length}
+                {project.tasks.filter((t) => t.status === "completed").length}/
+                {project.tasks.length}
               </span>
               <Dialog>
                 <DialogTrigger asChild>
@@ -782,9 +792,7 @@ export default function AdminDashboard() {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[700px]">
                   <DialogHeader>
-                    <DialogTitle>
-                      {project.title} - Tasks
-                    </DialogTitle>
+                    <DialogTitle>{project.title} - Tasks</DialogTitle>
                     <DialogDescription>
                       Manage tasks for this project
                     </DialogDescription>
@@ -792,23 +800,17 @@ export default function AdminDashboard() {
                   <div className="max-h-96 overflow-y-auto">
                     <div className="space-y-3">
                       {project.tasks.map((task) => {
-                        const taskStatusInfo = getTaskStatusInfo(
-                          task.status
-                        );
+                        const taskStatusInfo = getTaskStatusInfo(task.status);
                         return (
                           <div
                             key={task.id}
                             className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
                           >
                             <div className="flex items-start justify-between mb-2">
-                              <h4 className="font-medium">
-                                {task.title}
-                              </h4>
+                              <h4 className="font-medium">{task.title}</h4>
                               <Select
                                 value={task.status}
-                                onValueChange={(
-                                  value: Task["status"]
-                                ) =>
+                                onValueChange={(value: Task["status"]) =>
                                   handleTaskStatusUpdate(
                                     project.id,
                                     task.id,
@@ -874,9 +876,7 @@ export default function AdminDashboard() {
                         <form onSubmit={handleTaskSubmit}>
                           <div className="grid gap-4 py-4">
                             <div className="grid gap-2">
-                              <Label htmlFor="taskTitle">
-                                Task Title
-                              </Label>
+                              <Label htmlFor="taskTitle">Task Title</Label>
                               <Input
                                 id="taskTitle"
                                 value={taskForm.title}
@@ -909,14 +909,10 @@ export default function AdminDashboard() {
                               />
                             </div>
                             <div className="grid gap-2">
-                              <Label htmlFor="taskStatus">
-                                Status
-                              </Label>
+                              <Label htmlFor="taskStatus">Status</Label>
                               <Select
                                 value={taskForm.status}
-                                onValueChange={(
-                                  value: Task["status"]
-                                ) =>
+                                onValueChange={(value: Task["status"]) =>
                                   setTaskForm((prev) => ({
                                     ...prev,
                                     status: value,
@@ -944,9 +940,7 @@ export default function AdminDashboard() {
                             <Button
                               type="button"
                               variant="outline"
-                              onClick={() =>
-                                setIsTaskModalOpen(false)
-                              }
+                              onClick={() => setIsTaskModalOpen(false)}
                             >
                               Cancel
                             </Button>
@@ -1263,7 +1257,11 @@ export default function AdminDashboard() {
                 const StatusIcon = statusInfo.icon;
 
                 return (
-                  <ProjectCard key={project.id} project={project} worker={worker} />
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    worker={worker}
+                  />
                 );
               })}
             </div>

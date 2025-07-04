@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { IUser } from "@/interfaces";
+import { getUserDashboardUrl } from "@/lib/utils";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -11,7 +12,6 @@ export async function login(formData: FormData) {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
   };
-  console.log(data);
 
   const { error } = await supabase.auth.signInWithPassword(data);
 
@@ -19,8 +19,10 @@ export async function login(formData: FormData) {
     redirect("/error");
   }
 
+  const user = await getCurrentUser();
+
   //   revalidatePath("/", "layout");
-  redirect("/dashboard");
+  redirect(getUserDashboardUrl(user));
 }
 
 export async function signup(formData: FormData) {
@@ -53,6 +55,21 @@ export async function getCurrentUser() {
 
   if (!user || error) {
     redirect("/sign-in");
+  }
+
+  return user as IUser;
+}
+
+export async function getUserById(userId: string) {
+  const supabase = await createClient();
+  const { data: user, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", userId)
+    .maybeSingle();
+
+  if (!user || error) {
+    throw new Error(`User with ID ${userId} not found`);
   }
 
   return user as IUser;
