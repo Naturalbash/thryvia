@@ -285,7 +285,9 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                   created_at: new Date(),
                 };
                 setMessages((prev) => [...prev, msg]);
-                const { error } = await supabase.from("messages").insert(msg);
+                const { error } = await supabase
+                  .from("chat_messages")
+                  .insert(msg);
                 if (error) {
                   console.error("Error sending message:", error);
                   toast.error("Failed to send message. Please try again.");
