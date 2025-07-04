@@ -20,12 +20,12 @@
   background-color: #f3f4f6;
 }
 
-.habit-item.completed {
+.habit-item.Completed {
   background-color: #f0fdf4;
   border-left-color: #22c55e;
 }
 
-.habit-item.completed .text-gray-800 {
+.habit-item.Completed .text-gray-800 {
   color: #15803d;
 }
 

@@ -1,3 +1,4 @@
+"use client";
 import {
   Clock,
   AlertCircle,
@@ -13,7 +14,6 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import {
-  initialProjects,
   initialWorkers,
   Worker,
   Project,
@@ -23,9 +23,11 @@ import {
   Resource,
   Task,
 } from "./data";
+import { useAdminDashboardContext } from "./admin-dashboard-context";
 
 export function useAdminDashboard() {
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
+  const context = useAdminDashboardContext();
+  const [projects, setProjects] = useState<Project[]>(context.projects);
   const [workers] = useState<Worker[]>(initialWorkers);
   const [habits, setHabits] = useState<Habit[]>(initialHabits);
   const [resources, setResources] = useState<Resource[]>(initialResources);
@@ -50,8 +52,8 @@ export function useAdminDashboard() {
   const [projectForm, setProjectForm] = useState({
     title: "",
     description: "",
-    dueDate: "",
-    status: "not-started" as Project["status"],
+    due_date: "",
+    status: "At risk" as Project["status"],
     workerId: "",
   });
 
@@ -111,8 +113,8 @@ export function useAdminDashboard() {
     setProjectForm({
       title: "",
       description: "",
-      dueDate: "",
-      status: "not-started",
+      due_date: "",
+      status: "At risk",
       workerId: "",
     });
     setEditingProject(null);
@@ -159,10 +161,10 @@ export function useAdminDashboard() {
       );
     } else {
       const newProject: Project = {
-        id: Date.now().toString(),
+        id: Math.random(),
         ...projectForm,
         tasks: [],
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
       };
       setProjects((prev) => [...prev, newProject]);
     }
@@ -178,7 +180,7 @@ export function useAdminDashboard() {
       const newTask: Task = {
         id: Date.now().toString(),
         ...taskForm,
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
       };
 
       setProjects((prev) =>
@@ -205,7 +207,7 @@ export function useAdminDashboard() {
       const newHabit: Habit = {
         id: Date.now().toString(),
         ...habitForm,
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
       };
       setHabits((prev) => [...prev, newHabit]);
     }
@@ -227,7 +229,7 @@ export function useAdminDashboard() {
       const newResource: Resource = {
         id: Date.now().toString(),
         ...resourceForm,
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
       };
       setResources((prev) => [...prev, newResource]);
     }
@@ -242,7 +244,7 @@ export function useAdminDashboard() {
     setProjectForm({
       title: project.title,
       description: project.description,
-      dueDate: project.dueDate,
+      due_date: project.due_date,
       status: project.status,
       workerId: project.workerId,
     });
@@ -273,7 +275,7 @@ export function useAdminDashboard() {
   };
 
   // Handle deletes
-  const handleDeleteProject = (projectId: string) => {
+  const handleDeleteProject = (projectId: number) => {
     setProjects((prev) => prev.filter((p) => p.id !== projectId));
   };
 
@@ -287,7 +289,7 @@ export function useAdminDashboard() {
 
   // Handle task status update
   const handleTaskStatusUpdate = (
-    projectId: string,
+    projectId: number,
     taskId: string,
     newStatus: Task["status"]
   ) => {
@@ -308,25 +310,25 @@ export function useAdminDashboard() {
   // Utility functions
   const getStatusInfo = (status: Project["status"]) => {
     switch (status) {
-      case "not-started":
+      case "At risk":
         return {
           color: "bg-gray-100 text-gray-800",
           icon: Clock,
           label: "Not Started",
         };
-      case "on going":
+      case "On going":
         return {
           color: "bg-blue-100 text-blue-800",
           icon: AlertCircle,
           label: "In Progress",
         };
-      case "completed":
+      case "Completed":
         return {
           color: "bg-green-100 text-green-800",
           icon: CheckCircle,
           label: "Completed",
         };
-      case "delayed":
+      case "Delayed":
         return {
           color: "bg-yellow-100 text-yellow-800",
           icon: Pause,
@@ -347,7 +349,7 @@ export function useAdminDashboard() {
         return { color: "bg-gray-100 text-gray-800", label: "Pending" };
       case "in-progress":
         return { color: "bg-blue-100 text-blue-800", label: "In Progress" };
-      case "completed":
+      case "Completed":
         return { color: "bg-green-100 text-green-800", label: "Completed" };
       default:
         return { color: "bg-gray-100 text-gray-800", label: "Unknown" };
@@ -425,9 +427,9 @@ export function useAdminDashboard() {
   // Calculate stats
   const projectStats = {
     total: projects.length,
-    completed: projects.filter((p) => p.status === "completed").length,
-    inProgress: projects.filter((p) => p.status === "on going").length,
-    onHold: projects.filter((p) => p.status === "delayed").length,
+    Completed: projects.filter((p) => p.status === "Completed").length,
+    inProgress: projects.filter((p) => p.status === "On going").length,
+    onHold: projects.filter((p) => p.status === "Delayed").length,
   };
 
   const wellbeingStats = {

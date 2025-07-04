@@ -7,7 +7,7 @@ import { Habit, HabitCategory } from "./habit";
 import "./HabitTracker.css";
 
 interface HabitTrackerProps {
-  onHabitsChange?: (completedCount: number, totalCount: number) => void;
+  onHabitsChange?: (CompletedCount: number, totalCount: number) => void;
 }
 
 const initialHabits: Habit[] = [
@@ -19,7 +19,7 @@ const initialHabits: Habit[] = [
     category: HabitCategory.PHYSICAL,
     icon: "activity",
     tags: ["cardio", "outdoor"],
-    completed: false,
+    Completed: false,
     location: "park",
     heartRate: "140bpm",
   },
@@ -31,7 +31,7 @@ const initialHabits: Habit[] = [
     category: HabitCategory.NUTRITION,
     icon: "droplet",
     tags: ["hydration"],
-    completed: false,
+    Completed: false,
   },
   {
     id: "3",
@@ -41,7 +41,7 @@ const initialHabits: Habit[] = [
     category: HabitCategory.MINDFULNESS,
     icon: "brain",
     tags: ["mindfulness", "stress-relief"],
-    completed: false,
+    Completed: false,
   },
   {
     id: "4",
@@ -51,7 +51,7 @@ const initialHabits: Habit[] = [
     category: HabitCategory.SOCIAL,
     icon: "users",
     tags: ["connection", "team-building"],
-    completed: false,
+    Completed: false,
   },
   {
     id: "5",
@@ -61,7 +61,7 @@ const initialHabits: Habit[] = [
     category: HabitCategory.PHYSICAL,
     icon: "activity",
     tags: ["flexibility", "posture"],
-    completed: false,
+    Completed: false,
   },
   {
     id: "6",
@@ -71,7 +71,7 @@ const initialHabits: Habit[] = [
     category: HabitCategory.GROWTH,
     icon: "book",
     tags: ["learning", "relaxation"],
-    completed: false,
+    Completed: false,
   },
   {
     id: "7",
@@ -81,7 +81,7 @@ const initialHabits: Habit[] = [
     category: HabitCategory.MINDFULNESS,
     icon: "eye",
     tags: ["digital-detox", "relaxation"],
-    completed: false,
+    Completed: false,
   },
   {
     id: "8",
@@ -91,7 +91,7 @@ const initialHabits: Habit[] = [
     category: HabitCategory.REST,
     icon: "moon",
     tags: ["recovery", "energy"],
-    completed: false,
+    Completed: false,
   },
 ];
 
@@ -101,15 +101,15 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ onHabitsChange }) => {
 
   const toggleHabitCompletion = (id: string) => {
     const updatedHabits = habits.map((habit) =>
-      habit.id === id ? { ...habit, completed: !habit.completed } : habit
+      habit.id === id ? { ...habit, Completed: !habit.Completed } : habit
     );
     setHabits(updatedHabits);
   };
 
   useEffect(() => {
     if (onHabitsChange) {
-      const completedCount = habits.filter((h) => h.completed).length;
-      onHabitsChange(completedCount, habits.length);
+      const CompletedCount = habits.filter((h) => h.Completed).length;
+      onHabitsChange(CompletedCount, habits.length);
     }
   }, [habits, onHabitsChange]);
 
@@ -133,10 +133,10 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ onHabitsChange }) => {
   };
 
   const filteredHabits = habits.filter((habit) =>
-    activeTab === "Habits" ? !habit.completed : habit.completed
+    activeTab === "Habits" ? !habit.Completed : habit.Completed
   );
 
-  const completedCount = habits.filter((habit) => habit.completed).length;
+  const CompletedCount = habits.filter((habit) => habit.Completed).length;
 
   return (
     <div className="habit-tracker bg-white rounded-lg shadow-md overflow-hidden w-full">
@@ -163,9 +163,9 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ onHabitsChange }) => {
             onClick={() => setActiveTab("Completed")}
           >
             Completed
-            {completedCount > 0 && (
+            {CompletedCount > 0 && (
               <span className="ml-2 bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded-full">
-                {completedCount}
+                {CompletedCount}
               </span>
             )}
           </button>
@@ -184,8 +184,8 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ onHabitsChange }) => {
           ) : (
             <div className="text-center py-8 text-gray-500">
               {activeTab === "Habits"
-                ? "All habits completed! 🎉"
-                : "No completed habits yet"}
+                ? "All habits Completed! 🎉"
+                : "No Completed habits yet"}
             </div>
           )}
         </div>

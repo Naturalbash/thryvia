@@ -1,10 +1,10 @@
 export enum HabitCategory {
-  PHYSICAL = 'physical',
-  NUTRITION = 'nutrition',
-  MINDFULNESS = 'mindfulness',
-  SOCIAL = 'social',
-  GROWTH = 'growth',
-  REST = 'rest',
+  PHYSICAL = "physical",
+  NUTRITION = "nutrition",
+  MINDFULNESS = "mindfulness",
+  SOCIAL = "social",
+  GROWTH = "growth",
+  REST = "rest",
 }
 
 export interface Habit {
@@ -15,7 +15,7 @@ export interface Habit {
   category: HabitCategory;
   icon: string;
   tags: string[];
-  completed: boolean;
+  Completed: boolean;
   location?: string;
   heartRate?: string;
 }

@@ -17,11 +17,11 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
 }) => {
   const { projects } = useProjects();
   const totalProjects = projects.length;
-  const completedCount = projects.filter(
-    (p) => p.status.toLowerCase() === "completed"
+  const CompletedCount = projects.filter(
+    (p) => p.status.toLowerCase() === "Completed"
   ).length;
   const percentage =
-    totalProjects > 0 ? (completedCount / totalProjects) * 100 : 0;
+    totalProjects > 0 ? (CompletedCount / totalProjects) * 100 : 0;
   const remainingPercentage = 100 - percentage;
 
   return (

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Admin Dashboard",
 };
 
-export default function Page() {
+export default async function Page() {
   return (
     <div>
       <AdminDashboard />

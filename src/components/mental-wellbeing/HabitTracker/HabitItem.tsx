@@ -12,7 +12,7 @@ const HabitItem: React.FC<HabitItemProps> = ({ habit, icon, onToggle }) => {
   return (
     <div
       className={`habit-item bg-gray-50 rounded-lg p-3 transition-all duration-300 hover:shadow-sm ${
-        habit.completed ? "completed border-l-4" : ""
+        habit.Completed ? "Completed border-l-4" : ""
       }`}
     >
       <div className="flex items-center justify-between">
@@ -49,13 +49,13 @@ const HabitItem: React.FC<HabitItemProps> = ({ habit, icon, onToggle }) => {
 
         <div
           className={`h-5 w-5 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-200 ${
-            habit.completed
+            habit.Completed
               ? "bg-green-500 border-green-500 text-white"
               : "border-gray-300 hover:border-green-400"
           }`}
           onClick={onToggle}
         >
-          {habit.completed && (
+          {habit.Completed && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="12"

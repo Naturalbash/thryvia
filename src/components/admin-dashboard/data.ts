@@ -10,19 +10,19 @@ export interface Task {
   id: string;
   title: string;
   description: string;
-  status: "pending" | "in-progress" | "completed";
-  createdAt: string;
+  status: "pending" | "in-progress" | "Completed";
+  created_at: string;
 }
 
 export interface Project {
-  id: string;
+  id: number;
   title: string;
   description: string;
-  dueDate: string;
-  status: "not-started" | "on going" | "completed" | "delayed";
+  due_date: string;
+  status: "At risk" | "On going" | "Completed" | "Delayed";
   workerId: string;
   tasks: Task[];
-  createdAt: string;
+  created_at: string;
 }
 
 export interface Habit {
@@ -31,7 +31,7 @@ export interface Habit {
   description: string;
   category: "physical" | "mental" | "social" | "productivity";
   frequency: "daily" | "weekly" | "monthly";
-  createdAt: string;
+  created_at: string;
 }
 
 export interface Resource {
@@ -46,7 +46,7 @@ export interface Resource {
     | "mindfulness"
     | "work-life-balance"
     | "communication";
-  createdAt: string;
+  created_at: string;
 }
 
 export const initialWorkers: Worker[] = [
@@ -82,60 +82,60 @@ export const initialWorkers: Worker[] = [
 
 export const initialProjects: Project[] = [
   {
-    id: "1",
+    id: 1,
     title: "E-commerce Platform Redesign",
     description:
       "Complete redesign of the company e-commerce platform with modern UI/UX",
-    dueDate: "2024-02-15",
-    status: "on going",
+    due_date: "2024-02-15",
+    status: "On going",
     workerId: "1",
-    createdAt: "2024-01-01",
+    created_at: "2024-01-01",
     tasks: [
       {
         id: "1",
         title: "Create wireframes",
         description: "Design low-fidelity wireframes for main pages",
-        status: "completed",
-        createdAt: "2024-01-02",
+        status: "Completed",
+        created_at: "2024-01-02",
       },
       {
         id: "2",
         title: "Implement responsive header",
         description: "Build responsive navigation header component",
         status: "in-progress",
-        createdAt: "2024-01-05",
+        created_at: "2024-01-05",
       },
       {
         id: "3",
         title: "Product catalog page",
         description: "Develop product listing and filtering functionality",
         status: "pending",
-        createdAt: "2024-01-08",
+        created_at: "2024-01-08",
       },
     ],
   },
   {
-    id: "2",
+    id: 2,
     title: "API Integration Service",
     description: "Build microservice for third-party API integrations",
-    dueDate: "2024-01-30",
-    status: "completed",
+    due_date: "2024-01-30",
+    status: "Completed",
     workerId: "2",
-    createdAt: "2024-01-01",
+    created_at: "2024-01-01",
     tasks: [
       {
         id: "4",
         title: "API documentation",
         description: "Document all API endpoints and responses",
-        status: "completed",
-        createdAt: "2024-01-03",
+        status: "Completed",
+        created_at: "2024-01-03",
       },
       {
         id: "5",
         title: "Authentication middleware",
         description: "Implement JWT authentication for API access",
-        status: "completed",
-        createdAt: "2024-01-10",
+        status: "Completed",
+        created_at: "2024-01-10",
       },
     ],
   },
@@ -148,7 +148,7 @@ export const initialHabits: Habit[] = [
     description: "10 minutes of mindfulness meditation to start the day",
     category: "mental",
     frequency: "daily",
-    createdAt: "2024-01-01",
+    created_at: "2024-01-01",
   },
   {
     id: "2",
@@ -156,7 +156,7 @@ export const initialHabits: Habit[] = [
     description: "30 minutes of physical activity (walking, yoga, or workout)",
     category: "physical",
     frequency: "daily",
-    createdAt: "2024-01-01",
+    created_at: "2024-01-01",
   },
   {
     id: "3",
@@ -165,7 +165,7 @@ export const initialHabits: Habit[] = [
       "Connect with at least one team member for non-work conversation",
     category: "social",
     frequency: "daily",
-    createdAt: "2024-01-01",
+    created_at: "2024-01-01",
   },
   {
     id: "4",
@@ -173,7 +173,7 @@ export const initialHabits: Habit[] = [
     description: "2-hour focused work session without distractions",
     category: "productivity",
     frequency: "daily",
-    createdAt: "2024-01-01",
+    created_at: "2024-01-01",
   },
 ];
 
@@ -186,7 +186,7 @@ export const initialResources: Resource[] = [
     type: "article",
     url: "https://example.com/remote-stress-management",
     category: "stress-management",
-    createdAt: "2024-01-01",
+    created_at: "2024-01-01",
   },
   {
     id: "2",
@@ -196,7 +196,7 @@ export const initialResources: Resource[] = [
     type: "video",
     url: "https://example.com/productivity-techniques",
     category: "productivity",
-    createdAt: "2024-01-01",
+    created_at: "2024-01-01",
   },
   {
     id: "3",
@@ -206,7 +206,7 @@ export const initialResources: Resource[] = [
     type: "podcast",
     url: "https://example.com/mindful-remote-podcast",
     category: "mindfulness",
-    createdAt: "2024-01-01",
+    created_at: "2024-01-01",
   },
   {
     id: "4",
@@ -216,6 +216,6 @@ export const initialResources: Resource[] = [
     type: "article",
     url: "https://example.com/work-life-balance",
     category: "work-life-balance",
-    createdAt: "2024-01-01",
+    created_at: "2024-01-01",
   },
 ];

@@ -15,7 +15,7 @@ export function TodaysTask({ tasks: data }: TodaysTaskProps) {
   const toggleTask = (id: string) => {
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
+        task.id === id ? { ...task, Completed: !task.Completed } : task
       )
     );
   };

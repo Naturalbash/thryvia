@@ -14,7 +14,7 @@ export function TaskItem({ task, onToggle }: TaskItemProps) {
       onClick={() => onToggle(task.id)}
     >
       <div className="flex-shrink-0">
-        {task.completed ? (
+        {task.Completed ? (
           <div className="h-5 w-5 rounded-full flex items-center justify-center bg-slate-800 text-white transition-all duration-200">
             <Check className="h-3.5 w-3.5" />
           </div>
@@ -27,7 +27,7 @@ export function TaskItem({ task, onToggle }: TaskItemProps) {
       <span
         className={cn(
           "text-sm transition-all duration-200",
-          task.completed ? "text-gray-300 line-through" : "text-gray-700"
+          task.Completed ? "text-gray-300 line-through" : "text-gray-700"
         )}
       >
         {task.title}

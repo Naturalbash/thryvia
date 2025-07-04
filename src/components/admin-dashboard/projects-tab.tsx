@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Card, CardContent } from "../ui/card";
 import {
@@ -89,7 +90,7 @@ export default function ProjectsTab() {
               <div>
                 <p className="text-sm font-medium text-gray-600">Completed</p>
                 <p className="text-3xl font-bold text-green-600">
-                  {projectStats.completed}
+                  {projectStats.Completed}
                 </p>
               </div>
               <CheckCircle className="h-8 w-8 text-green-400" />
@@ -131,9 +132,9 @@ export default function ProjectsTab() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="not-started">Not Started</SelectItem>
+              <SelectItem value="At risk">Not Started</SelectItem>
               <SelectItem value="in-progress">In Progress</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="Completed">Completed</SelectItem>
               <SelectItem value="on-hold">On Hold</SelectItem>
             </SelectContent>
           </Select>
@@ -194,15 +195,15 @@ export default function ProjectsTab() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="dueDate">Due Date</Label>
+                    <Label htmlFor="due_date">Due Date</Label>
                     <Input
-                      id="dueDate"
+                      id="due_date"
                       type="date"
-                      value={projectForm.dueDate}
+                      value={projectForm.due_date}
                       onChange={(e) =>
                         setProjectForm((prev) => ({
                           ...prev,
-                          dueDate: e.target.value,
+                          due_date: e.target.value,
                         }))
                       }
                       required
@@ -223,9 +224,9 @@ export default function ProjectsTab() {
                         <SelectValue placeholder="Select status" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="not-started">Not Started</SelectItem>
+                        <SelectItem value="At risk">Not Started</SelectItem>
                         <SelectItem value="in-progress">In Progress</SelectItem>
-                        <SelectItem value="completed">Completed</SelectItem>
+                        <SelectItem value="Completed">Completed</SelectItem>
                         <SelectItem value="on-hold">On Hold</SelectItem>
                       </SelectContent>
                     </Select>

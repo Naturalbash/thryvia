@@ -26,7 +26,7 @@ export interface ITask {
   id: string;
   title: string;
   created_at: Date;
-  completed: boolean;
+  Completed: boolean;
   project_id: number;
 }
 

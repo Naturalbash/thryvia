@@ -56,16 +56,16 @@ export function ProjectCard({
 
   const [formattedDueDate, setFormattedDueDate] = React.useState("");
   React.useEffect(() => {
-    if (project.dueDate) {
+    if (project.due_date) {
       setFormattedDueDate(
-        new Date(project.dueDate).toLocaleDateString("en-US", {
+        new Date(project.due_date).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
         })
       );
     }
-  }, [project.dueDate]);
+  }, [project.due_date]);
 
   return (
     <Card
@@ -111,7 +111,7 @@ export function ProjectCard({
         <div className="space-y-3 mb-4">
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <Calendar className="h-4 w-4" />
-            Due: {formattedDueDate || project.dueDate}
+            Due: {formattedDueDate || project.due_date}
           </div>
 
           {worker && (
@@ -129,7 +129,7 @@ export function ProjectCard({
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-600">
               Tasks:{" "}
-              {project.tasks.filter((t) => t.status === "completed").length}/
+              {project.tasks.filter((t) => t.status === "Completed").length}/
               {project.tasks.length}
             </span>
             <Dialog>
@@ -179,7 +179,7 @@ export function ProjectCard({
                                 <SelectItem value="in-progress">
                                   In Progress
                                 </SelectItem>
-                                <SelectItem value="completed">
+                                <SelectItem value="Completed">
                                   Completed
                                 </SelectItem>
                               </SelectContent>
@@ -274,7 +274,7 @@ export function ProjectCard({
                                 <SelectItem value="in-progress">
                                   In Progress
                                 </SelectItem>
-                                <SelectItem value="completed">
+                                <SelectItem value="Completed">
                                   Completed
                                 </SelectItem>
                               </SelectContent>

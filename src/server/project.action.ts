@@ -16,3 +16,24 @@ export async function fetchUserProjects(
 
   return data as IProject[];
 }
+
+export async function fetchALlProjects() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.from("projects").select("*");
+
+  if (error) throw new Error(`Error getting user projects`);
+
+  const shapedData = data.map((p) => ({
+    id: p.id,
+    title: p.title,
+    description: p.description,
+    due_date: p.due_date,
+    status: p.status,
+    workerId: p.user_id,
+    tasks: [],
+    created_at: p.created_at,
+  }));
+
+  return shapedData;
+}

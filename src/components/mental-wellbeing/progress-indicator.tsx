@@ -7,7 +7,7 @@ import DailyProgressIndicator from "./daily-progres-indicator";
 type ProgressIndicatorProps = {
   overallProgress: number;
   habitsProgress: {
-    completed: number;
+    Completed: number;
     total: number;
   };
 };
@@ -36,7 +36,7 @@ const ProgressIndicator = ({
               <div className="mt-2 flex justify-between items-center">
                 <span className="text-gray-600">Daily habits</span>
                 <span className="font-semibold">
-                  {habitsProgress.completed}/{habitsProgress.total} completed
+                  {habitsProgress.Completed}/{habitsProgress.total} Completed
                 </span>
               </div>
             </div>
