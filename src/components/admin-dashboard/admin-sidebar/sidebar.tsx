@@ -17,7 +17,7 @@ const mainNavItems = [
 ];
 
 const bottomNavItems = [
-  { id: "/admi-dashboard/settings", icon: Settings, text: "Settings" },
+  { id: "/admin-dashboard/settings", icon: Settings, text: "Settings" },
   { id: "logout", icon: LogOut, text: "Logout" },
 ];
 

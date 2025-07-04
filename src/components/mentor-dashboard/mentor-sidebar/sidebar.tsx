@@ -2,30 +2,22 @@
 
 import React, { ReactNode, useState } from "react";
 import {
-  LayoutDashboard,
-  Brain,
-  LineChart,
   Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,
+  LayoutDashboard,
 } from "lucide-react";
 import SidebarItem from "./sidebar-item";
 import SidebarHeader from "./sidebar-header";
 
 // Navigation items data
 const mainNavItems = [
-  { id: "/dashboard", icon: LayoutDashboard, text: "Dashboard" },
-  {
-    id: "/dashboard/mental-wellbeing",
-    icon: LineChart,
-    text: "Mental Wellbeing",
-  },
-  { id: "/dashboard/mentorship", icon: Brain, text: "Mentorship" },
+  { id: "/mentor-dashboard", icon: LayoutDashboard, text: "Dashboard" },
 ];
 
 const bottomNavItems = [
-  { id: "/dashboard/settings", icon: Settings, text: "Settings" },
+  { id: "/mentor-dashboard/settings", icon: Settings, text: "Settings" },
   { id: "logout", icon: LogOut, text: "Logout" },
 ];
 
