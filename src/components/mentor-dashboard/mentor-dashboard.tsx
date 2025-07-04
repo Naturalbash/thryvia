@@ -34,7 +34,7 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const supabase = createClient();
 
-  console.log("Current Mentor:", currentMentor);
+  console.log({ currentMentor, selectedWorker, messages });
 
   // Memoize fetchMessages to prevent re-creation
 
@@ -102,7 +102,7 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
           sender_id: msg.sender_id,
           recipient_id: msg.recipient_id,
           content: msg.content,
-          created_at: new Date(msg.timestamp),
+          created_at: new Date(msg.created_at),
           chat_session_id: msg.chat_session_id,
         })) || []
       );
@@ -276,12 +276,16 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
               recipient={selectedWorker}
               messages={messages}
               onSendMessage={async (content: string) => {
-                const { error } = await supabase.from("messages").insert({
+                const msg = {
+                  id: Math.floor(Math.random() * 1000000), // Temporary ID, replace with actual ID generation
                   sender_id: currentMentor.id,
                   recipient_id: selectedWorker.id,
                   content,
-                  timestamp: new Date().toISOString(),
-                });
+                  chat_session_id: `${selectedWorker.id}-${currentMentor.id}`,
+                  created_at: new Date(),
+                };
+                setMessages((prev) => [...prev, msg]);
+                const { error } = await supabase.from("messages").insert(msg);
                 if (error) {
                   console.error("Error sending message:", error);
                   toast.error("Failed to send message. Please try again.");
