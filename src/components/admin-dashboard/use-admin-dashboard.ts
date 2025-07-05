@@ -23,7 +23,7 @@ import {
   Task,
 } from "./data";
 import { useAdminDashboardContext } from "./admin-dashboard-context";
-import { addProject } from "./database";
+import { addProject, addTask } from "./database";
 
 export function useAdminDashboard() {
   const context = useAdminDashboardContext();
@@ -189,6 +189,7 @@ export function useAdminDashboard() {
         id: Date.now().toString(),
         ...taskForm,
         created_at: new Date().toISOString(),
+        project_id: selectedProject.id,
       };
 
       setProjects((prev) =>
@@ -202,6 +203,11 @@ export function useAdminDashboard() {
 
     setIsTaskModalOpen(false);
     resetTaskForm();
+
+    addTask({
+      title: taskForm.title,
+      project_id: selectedProject?.id,
+    });
   };
 
   const handleHabitSubmit = (e: React.FormEvent) => {

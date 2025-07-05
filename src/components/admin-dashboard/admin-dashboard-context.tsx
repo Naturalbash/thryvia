@@ -7,6 +7,7 @@ export interface Task {
   description: string;
   status: "pending" | "in-progress" | "Completed";
   created_at: string;
+  project_id: number;
 }
 
 export interface Project {

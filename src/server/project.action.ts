@@ -25,8 +25,6 @@ export async function fetchALlProjects() {
 
   if (error) throw new Error(`Error getting user projects`);
 
-  console.log(data);
-
   const shapedData = data.map((p) => ({
     id: p.id,
     title: p.title,
