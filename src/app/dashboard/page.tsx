@@ -27,7 +27,7 @@ export default async function Page() {
 
   return (
     <ProjectsProvider projects={projects}>
-      <div className="py-2 px-2 sm:py-4 sm:px-4 font-sans space-y-4">
+      <div className="py-2 px-2 sm:py-4 sm:px-4 font-sans space-y-4 min-h-full">
         <FilterDays />
         
         {/* Main cards grid - responsive layout */}

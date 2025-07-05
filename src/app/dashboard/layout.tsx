@@ -5,10 +5,14 @@ import Sidebar from "@/components/sidebar/sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className="h-screen overflow-hidden">
       <Sidebar>
-        <DashboardHeader />
-        <div>{children}</div>
+        <div className="flex flex-col h-full">
+          <DashboardHeader />
+          <main className="flex-1 overflow-auto">
+            {children}
+          </main>
+        </div>
       </Sidebar>
     </div>
   );

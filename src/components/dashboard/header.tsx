@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState, useEffect, useRef } from "react";
-import { Bell, Search, Settings, X } from "lucide-react";
+import { Bell, Search, Settings, X, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
@@ -13,6 +13,7 @@ export default function DashboardHeader() {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Load user info from localStorage
@@ -74,7 +75,10 @@ export default function DashboardHeader() {
       <header className="top-0 z-10 w-full bg-slate-300 border-b border-gray-200 shadow-sm px-3 sm:px-4 md:px-6 py-2 sm:py-3">
         <div className="mx-auto flex items-center justify-between">
           <div className="flex items-center">
-            <h1 className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-800">Dashboard</h1>
+            {/* Add left margin on mobile to avoid menu button overlap */}
+            <h1 className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-800 ml-12 lg:ml-0">
+              Dashboard
+            </h1>
           </div>
 
           <div className="flex items-center space-x-2 sm:space-x-4">

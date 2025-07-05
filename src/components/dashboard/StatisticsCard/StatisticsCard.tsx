@@ -36,7 +36,7 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
       </div>
 
       <div className="flex justify-center mb-4 sm:mb-6">
-        <CircularProgress
+        <CircularProgr
           percentage={Math.round(percentage)}
           className="transform transition-transform hover:scale-110 sm:hover:scale-115 duration-300"
         />

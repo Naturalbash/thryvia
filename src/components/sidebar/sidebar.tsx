@@ -70,36 +70,37 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button - Fixed position, top left */}
       <button
         onClick={toggleMobileMenu}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors shadow-lg"
         aria-label="Toggle mobile menu"
       >
         {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
-      {/* Sidebar */}
+      {/* Desktop Sidebar - Always visible, hover expandable */}
       <div
         className={`
-          fixed lg:relative h-full bg-slate-800 flex flex-col flex-shrink-0
-          transition-all duration-300 ease-in-out z-40
+          hidden lg:block h-full bg-slate-800 flex flex-col flex-shrink-0
+          transition-all duration-500 ease-in-out
           ${isExpanded ? "w-56" : "w-16"}
-          ${isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <SidebarHeader isExpanded={isExpanded} />
 
-        {/* Toggle Button - Desktop only */}
-        <button
-          onClick={toggleSidebar}
-          className="hidden lg:block p-2 m-2 bg-gray-200 rounded-lg hover:bg-gray-500 transition-colors flex justify-center"
-          title={isExpanded ? "Collapse Sidebar" : "Expand Sidebar"}
-        >
-          {isExpanded ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
-        </button>
+        {/* Toggle Button - Positioned at top right of sidebar */}
+        <div className="flex justify-end px-2 py-1">
+          <button
+            onClick={toggleSidebar}
+            className="p-1.5 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors flex justify-center"
+            title={isExpanded ? "Collapse Sidebar" : "Expand Sidebar"}
+          >
+            {isExpanded ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+          </button>
+        </div>
 
         <nav className="flex flex-col flex-1 px-2">
           {/* Main navigation items */}
@@ -116,8 +117,8 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             ))}
           </div>
 
-          {/* Bottom navigation items */}
-          <div className="mt-auto mb-5">
+          {/* Bottom navigation items - Always at bottom */}
+          <div className="mt-auto py-2">
             {bottomNavItems.map((item) => (
               <SidebarItem
                 id={item.id}
@@ -133,7 +134,51 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </nav>
       </div>
 
-      {/* Mobile Overlay */}
+      {/* Mobile Sidebar Overlay */}
+      <div
+        className={`
+          lg:hidden fixed inset-0 z-40 transition-transform duration-500 ease-in-out
+          ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
+      >
+        {/* Mobile Sidebar Content */}
+        <div className="h-full bg-slate-800 flex flex-col flex-shrink-0 w-64">
+          <SidebarHeader isExpanded={true} />
+
+          <nav className="flex flex-col flex-1 px-2">
+            {/* Main navigation items */}
+            <div className="py-2">
+              {mainNavItems.map((item) => (
+                <SidebarItem
+                  id={item.id}
+                  key={item.id}
+                  icon={item.icon}
+                  text={item.text}
+                  isActive={activeItem === item.id}
+                  onClick={() => handleItemClick(item.id)}
+                />
+              ))}
+            </div>
+
+            {/* Bottom navigation items - Always at bottom */}
+            <div className="mt-auto py-2">
+              {bottomNavItems.map((item) => (
+                <SidebarItem
+                  id={item.id}
+                  key={item.id}
+                  icon={item.icon}
+                  text={item.text}
+                  isActive={activeItem === item.id}
+                  onClick={() => handleItemClick(item.id)}
+                  isBottom
+                />
+              ))}
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      {/* Mobile Overlay Background */}
       {isMobileOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
@@ -141,7 +186,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         />
       )}
 
-      {/* Content area */}
+      {/* Main Content Area - Always visible and not covered */}
       <div className="flex-1 bg-slate-100 overflow-auto w-full">
         {children}
       </div>
