@@ -27,6 +27,7 @@ export default function Page() {
 
 function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -50,8 +51,21 @@ function Header() {
           alt="Thryvia Logo"
           width={180}
           height={40}
+          className="w-32 sm:w-auto"
         />
-        <div className="flex nav-link-box">
+        
+        {/* Mobile menu button */}
+        <button
+          className="lg:hidden p-2 rounded-md hover:bg-gray-100 transition-colors"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        {/* Desktop navigation */}
+        <div className="hidden lg:flex nav-link-box">
           <ul className="flex nav-links">
             <li>
               <a href="https://www.google.com">Features</a>
@@ -76,6 +90,52 @@ function Header() {
           </div>
         </div>
       </div>
+
+      {/* Mobile menu overlay */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50">
+          <div className="fixed top-0 right-0 h-full w-64 bg-white shadow-lg p-6">
+            <div className="flex justify-between items-center mb-8">
+              <Image
+                src="/thryvia-logo.png"
+                alt="Thryvia Logo"
+                width={120}
+                height={30}
+              />
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 rounded-md hover:bg-gray-100"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <ul className="space-y-4 mb-8">
+              <li>
+                <a href="https://www.google.com" className="block text-lg font-medium text-gray-700 hover:text-orange-600">Features</a>
+              </li>
+              <li>
+                <a href="https://www.google.com" className="block text-lg font-medium text-gray-700 hover:text-orange-600">Testimonials</a>
+              </li>
+              <li>
+                <a href="https://www.google.com" className="block text-lg font-medium text-gray-700 hover:text-orange-600">FAQ</a>
+              </li>
+              <li>
+                <a href="https://www.google.com" className="block text-lg font-medium text-gray-700 hover:text-orange-600">Contact</a>
+              </li>
+            </ul>
+            <div className="space-y-3">
+              <button className="btn btn-outline w-full">
+                <Link href="/sign-in">Login</Link>
+              </button>
+              <button className="btn btn-main w-full">
+                <Link href="/sign-up">Sign Up</Link>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
@@ -138,65 +198,65 @@ function Hero() {
 
 function Tools() {
   return (
-    <section className="bg-white py-16 px-6 md:px-20">
+    <section className="bg-white py-12 px-4 sm:py-16 sm:px-6 md:px-20">
       <div className="max-w-7xl mx-auto">
-        <header className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-[#222] uppercase tracking-wide mb-4">
+        <header className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#222] uppercase tracking-wide mb-3 sm:mb-4">
             Simple Tools for Remote Success
           </h2>
-          <p className="text-gray-600 text-lg font-medium">
+          <p className="text-gray-600 text-base sm:text-lg font-medium">
             Everything you need to thrive in your remote work journey.
           </p>
         </header>
-        <div className="grid grid-cols-3 gap-8 mb-14">
-          <div className="p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center ">
-            <div className="p-3 rounded-full bg-red-500 text-white mb-4">
-              <Activity size={50} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-14">
+          <div className="p-6 sm:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center">
+            <div className="p-2 sm:p-3 rounded-full bg-red-500 text-white mb-3 sm:mb-4">
+              <Activity size={40} className="sm:w-[50px] sm:h-[50px]" />
             </div>
-            <h2 className="text-xl font-semibold mb-5">
+            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-5 text-center">
               Productivity tracking
             </h2>
-            <p className="text-center mb-8 text-[#333]">
+            <p className="text-center mb-6 sm:mb-8 text-[#333] text-sm sm:text-base">
               Track your productivity and recieive insighs to optimize your
               workflow for better results.
             </p>
             <a
               href="https://google.com"
-              className="text-md font-normal bg-red-50 p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
+              className="text-sm sm:text-md font-normal bg-red-50 p-2 sm:p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
             >
               Learn more
             </a>
           </div>
-          <div className="p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center ">
-            <div className="p-3 rounded-full bg-red-500 text-white mb-4">
-              <Heart size={50} />
+          <div className="p-6 sm:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center">
+            <div className="p-2 sm:p-3 rounded-full bg-red-500 text-white mb-3 sm:mb-4">
+              <Heart size={40} className="sm:w-[50px] sm:h-[50px]" />
             </div>
-            <h2 className="text-xl font-semibold mb-5">Mental Wellbeing</h2>
-            <p className="text-center mb-8 text-[#333]">
+            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-5 text-center">Mental Wellbeing</h2>
+            <p className="text-center mb-6 sm:mb-8 text-[#333] text-sm sm:text-base">
               Access resources designed to support your mental health and
               maintain work-life balance.
             </p>
             <a
               href="https://google.com"
-              className="text-md font-normal bg-red-50 p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
+              className="text-sm sm:text-md font-normal bg-red-50 p-2 sm:p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
             >
               Learn more
             </a>
           </div>
-          <div className="p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center ">
-            <div className="p-3 rounded-full bg-red-500 text-white mb-4">
-              <Users size={50} />
+          <div className="p-6 sm:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center sm:col-span-2 lg:col-span-1">
+            <div className="p-2 sm:p-3 rounded-full bg-red-500 text-white mb-3 sm:mb-4">
+              <Users size={40} className="sm:w-[50px] sm:h-[50px]" />
             </div>
-            <h2 className="text-xl font-semibold mb-5">
+            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-5 text-center">
               Professional Mentorship
             </h2>
-            <p className="text-center mb-8 text-[#333]">
+            <p className="text-center mb-6 sm:mb-8 text-[#333] text-sm sm:text-base">
               Connect with experienced professionals for career guidance and
               growth opportunities.
             </p>
             <a
               href="https://google.com"
-              className="text-md font-normal bg-red-50 p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
+              className="text-sm sm:text-md font-normal bg-red-50 p-2 sm:p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
             >
               Learn more
             </a>

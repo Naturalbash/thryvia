@@ -140,12 +140,12 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ onHabitsChange }) => {
 
   return (
     <div className="habit-tracker bg-white rounded-lg shadow-md overflow-hidden w-full">
-      <div className="p-4">
-        <h2 className="text-xl font-semibold mb-4">Habit tracker</h2>
+      <div className="p-3 sm:p-4">
+        <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Habit tracker</h2>
 
-        <div className="flex border-b mb-4">
+        <div className="flex border-b mb-3 sm:mb-4">
           <button
-            className={`py-2 px-4 font-semibold ${
+            className={`py-2 px-3 sm:px-4 text-sm sm:text-base font-semibold ${
               activeTab === "Habits"
                 ? "text-[#8B5CF6] border-b-2 border-[#8B5CF6]"
                 : "text-gray-500"
@@ -155,7 +155,7 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ onHabitsChange }) => {
             Habits
           </button>
           <button
-            className={`py-2 px-4 font-medium flex items-center ${
+            className={`py-2 px-3 sm:px-4 text-sm sm:text-base font-medium flex items-center ${
               activeTab === "Completed"
                 ? "text-blue-600 border-b-2 border-blue-600"
                 : "text-gray-500"
@@ -164,7 +164,7 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ onHabitsChange }) => {
           >
             Completed
             {CompletedCount > 0 && (
-              <span className="ml-2 bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded-full">
+              <span className="ml-1 sm:ml-2 bg-blue-100 text-blue-600 text-xs px-1.5 sm:px-2 py-0.5 rounded-full">
                 {CompletedCount}
               </span>
             )}

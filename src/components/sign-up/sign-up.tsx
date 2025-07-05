@@ -55,22 +55,22 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen items-center justify-center bg-gray-100 px-2 sm:px-4">
+    <div className="flex flex-col w-full min-h-screen items-center justify-center bg-gray-100 px-2 sm:px-4 py-4">
       <Logo
         src="/logo.png"
         alt="Thyryvia Logo"
-        width={120}
-        height={120}
-        className="mb-4"
+        width={100}
+        height={100}
+        className="mb-4 sm:w-[120px] sm:h-[120px]"
       />
-      <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-2xl shadow-md text-slate-800 max-h-[calc(100vh-4rem)] overflow-y-auto">
-        <h1 className="text-xl sm:text-2xl font-bold text-center mb-4 text-slate-800 tracking-wide">
+      <div className="w-full max-w-sm sm:max-w-md bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-md text-slate-800 max-h-[calc(100vh-2rem)] overflow-y-auto">
+        <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-4 text-slate-800 tracking-wide">
           Create an Account
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex space-x-3">
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+          <div className="flex flex-col sm:flex-row sm:space-x-3 space-y-3 sm:space-y-0">
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 First Name
               </label>
               <input
@@ -79,12 +79,12 @@ export default function SignUp() {
                 value={formData.firstName}
                 onChange={handleChange}
                 required
-                className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
                 placeholder="Enter your first name"
               />
             </div>
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Last Name
               </label>
               <input
@@ -93,14 +93,14 @@ export default function SignUp() {
                 value={formData.lastName}
                 onChange={handleChange}
                 required
-                className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
                 placeholder="Enter your last name"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Username
             </label>
             <input
@@ -109,13 +109,13 @@ export default function SignUp() {
               value={formData.username}
               onChange={handleChange}
               required
-              className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
               placeholder="Choose a username"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Email
             </label>
             <input
@@ -124,14 +124,14 @@ export default function SignUp() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
               placeholder="Enter your email"
             />
           </div>
 
-          <div className="flex space-x-3">
+          <div className="flex flex-col sm:flex-row sm:space-x-3 space-y-3 sm:space-y-0">
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Password
               </label>
               <input
@@ -140,12 +140,12 @@ export default function SignUp() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
                 placeholder="Create a password"
               />
             </div>
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Confirm Password
               </label>
               <input
@@ -154,7 +154,7 @@ export default function SignUp() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
-                className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
                 placeholder="Confirm your password"
               />
               {passwordError && (
@@ -166,7 +166,7 @@ export default function SignUp() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Role
             </label>
             <select
@@ -179,7 +179,7 @@ export default function SignUp() {
                 }))
               }
               required
-              className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm bg-white"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm bg-white"
             >
               <option value="" disabled>
                 Select your role
@@ -197,21 +197,21 @@ export default function SignUp() {
 
           <button
             type="submit"
-            className="w-full py-2 bg-slate-700 text-white font-semibold border-none rounded-sm text-sm cursor-pointer hover:bg-slate-600 transition"
+            className="w-full py-2.5 sm:py-3 bg-slate-700 text-white font-semibold border-none rounded-sm text-sm cursor-pointer hover:bg-slate-600 transition"
           >
-            Register
+            Create Account
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm font-semibold">
+        <div className="mt-4 sm:mt-6 text-center text-sm font-semibold">
           Already have an account?{" "}
           <Link
             href="/sign-in"
             className="text-red-600 hover:text-slate-800 hover:underline"
           >
-            Login
+            Sign In
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );

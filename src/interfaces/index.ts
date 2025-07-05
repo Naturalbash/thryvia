@@ -25,8 +25,9 @@ export interface IProject {
 export interface ITask {
   id: string;
   title: string;
-  created_at: Date;
-  Completed: boolean;
+  description: string;
+  completed: boolean;
+  created_at: string;
   project_id: number;
 }
 

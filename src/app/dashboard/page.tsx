@@ -27,18 +27,25 @@ export default async function Page() {
 
   return (
     <ProjectsProvider projects={projects}>
-      <div className="py-4 px-4 font-sans grid grid-col-1 gap-4">
+      <div className="py-2 px-2 sm:py-4 sm:px-4 font-sans space-y-4">
         <FilterDays />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="flex flex-col gap-4">
+        
+        {/* Main cards grid - responsive layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {/* First column - stacked on mobile, side by side on larger screens */}
+          <div className="flex flex-col gap-3 sm:gap-4">
             <TimeTrackingCard time_tracking={time_tracking} />
             <TodaysTask tasks={tasks} />
           </div>
+          
+          {/* Other cards */}
           <StatisticsCard />
           <OngoingProject />
           <FocusTimer />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        
+        {/* Bottom section - responsive grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
           <ProjectSummary />
           <DashboardChartOverall />
         </div>

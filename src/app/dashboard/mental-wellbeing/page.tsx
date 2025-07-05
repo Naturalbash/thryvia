@@ -11,20 +11,28 @@ export default function Page() {
   const { handleHabitsUpdate, habitsProgress, overallProgress } =
     useProgressHook();
   return (
-    <div className="flex gap-4 p-4">
-      <div className="flex flex-col gap-4">
-        <DailyCheckinCalendar />
-        <HabitTracker onHabitsChange={handleHabitsUpdate} />
-      </div>
-      <div>
-        <MentalHealthLibrary />
-      </div>
-      <div className="flex flex-col gap-4">
-        <ProgressIndicator
-          habitsProgress={habitsProgress}
-          overallProgress={overallProgress}
-        />
-        <MindfulnessTools />
+    <div className="p-2 sm:p-4 space-y-4">
+      {/* Mobile layout - stacked */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+        {/* Left column */}
+        <div className="flex flex-col gap-3 sm:gap-4">
+          <DailyCheckinCalendar />
+          <HabitTracker onHabitsChange={handleHabitsUpdate} />
+        </div>
+        
+        {/* Center column */}
+        <div className="lg:col-span-1">
+          <MentalHealthLibrary />
+        </div>
+        
+        {/* Right column */}
+        <div className="flex flex-col gap-3 sm:gap-4">
+          <ProgressIndicator
+            habitsProgress={habitsProgress}
+            overallProgress={overallProgress}
+          />
+          <MindfulnessTools />
+        </div>
       </div>
     </div>
   );
