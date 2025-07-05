@@ -11,9 +11,12 @@ interface FormData {
   email: string;
   password: string;
   confirmPassword: string;
+  role: "mentor" | "worker" | "";
 }
 
 export default function SignUp() {
+  const [passwordError, setPasswordError] = useState(false);
+  const [roleError, setRoleError] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -21,6 +24,7 @@ export default function SignUp() {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "",
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,10 +35,23 @@ export default function SignUp() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    let hasError = false;
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+      setPasswordError(true);
+      hasError = true;
+    } else {
+      setPasswordError(false);
     }
+
+    if (!formData.role) {
+      setRoleError(true);
+      hasError = true;
+    } else {
+      setRoleError(false);
+    }
+
+    if (hasError) return;
   };
 
   return (
@@ -140,7 +157,42 @@ export default function SignUp() {
                 className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 placeholder:text-gray-400 text-sm"
                 placeholder="Confirm your password"
               />
+              {passwordError && (
+                <p className="text-sm text-red-600 mt-1">
+                  Passwords do not match.
+                </p>
+              )}
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Role
+            </label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  role: e.target.value as "mentor" | "worker",
+                }))
+              }
+              required
+              className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm bg-white"
+            >
+              <option value="" disabled>
+                Select your role
+              </option>
+              <option value="mentor">Mentor</option>
+              <option value="worker">Worker</option>
+            </select>
+
+            {roleError && (
+              <p className="text-sm text-red-600 mt-1">
+                Please select a role before continuing.
+              </p>
+            )}
           </div>
 
           <button
