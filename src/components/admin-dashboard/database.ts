@@ -1,5 +1,6 @@
 import { IProject } from "@/interfaces";
 import { createClient } from "@/utils/supabase/client";
+import { Task } from "./data";
 
 export async function addProject(project: Partial<IProject>) {
   const supabase = createClient();
@@ -28,4 +29,12 @@ export async function fetchWorkers() {
   }));
 
   return shapedData;
+}
+
+export async function addTask(task: Partial<Task>) {
+  const supabase = createClient();
+
+  const { error } = await supabase.from("tasks").insert(task);
+
+  if (error) throw new Error(`Error adding task`);
 }

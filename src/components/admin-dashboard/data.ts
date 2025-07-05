@@ -12,6 +12,7 @@ export interface Task {
   description: string;
   status: "pending" | "in-progress" | "Completed";
   created_at: string;
+  project_id: number;
 }
 
 export interface Project {
@@ -48,98 +49,6 @@ export interface Resource {
     | "communication";
   created_at: string;
 }
-
-export const initialWorkers: Worker[] = [
-  {
-    id: "1",
-    name: "Sarah Johnson",
-    email: "sarah@company.com",
-    avatar: "SJ",
-    skills: ["React", "TypeScript", "Node.js"],
-  },
-  {
-    id: "2",
-    name: "Michael Chen",
-    email: "michael@company.com",
-    avatar: "MC",
-    skills: ["Python", "Django", "PostgreSQL"],
-  },
-  {
-    id: "3",
-    name: "Emily Rodriguez",
-    email: "emily@company.com",
-    avatar: "ER",
-    skills: ["UI/UX", "Figma", "Frontend"],
-  },
-  {
-    id: "4",
-    name: "David Kim",
-    email: "david@company.com",
-    avatar: "DK",
-    skills: ["DevOps", "AWS", "Docker"],
-  },
-];
-
-export const initialProjects: Project[] = [
-  {
-    id: 1,
-    title: "E-commerce Platform Redesign",
-    description:
-      "Complete redesign of the company e-commerce platform with modern UI/UX",
-    due_date: "2024-02-15",
-    status: "On going",
-    workerId: "1",
-    created_at: "2024-01-01",
-    tasks: [
-      {
-        id: "1",
-        title: "Create wireframes",
-        description: "Design low-fidelity wireframes for main pages",
-        status: "Completed",
-        created_at: "2024-01-02",
-      },
-      {
-        id: "2",
-        title: "Implement responsive header",
-        description: "Build responsive navigation header component",
-        status: "in-progress",
-        created_at: "2024-01-05",
-      },
-      {
-        id: "3",
-        title: "Product catalog page",
-        description: "Develop product listing and filtering functionality",
-        status: "pending",
-        created_at: "2024-01-08",
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "API Integration Service",
-    description: "Build microservice for third-party API integrations",
-    due_date: "2024-01-30",
-    status: "Completed",
-    workerId: "2",
-    created_at: "2024-01-01",
-    tasks: [
-      {
-        id: "4",
-        title: "API documentation",
-        description: "Document all API endpoints and responses",
-        status: "Completed",
-        created_at: "2024-01-03",
-      },
-      {
-        id: "5",
-        title: "Authentication middleware",
-        description: "Implement JWT authentication for API access",
-        status: "Completed",
-        created_at: "2024-01-10",
-      },
-    ],
-  },
-];
 
 export const initialHabits: Habit[] = [
   {
