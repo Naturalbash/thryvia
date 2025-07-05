@@ -50,8 +50,8 @@ function Header() {
           src="/thryvia-logo.png"
           alt="Thryvia Logo"
           width={180}
-          height={40}
-          className="w-32 sm:w-auto"
+          height={50}
+          className="w-16 sm:w-20 md:w-24 lg:w-32"
         />
         
         {/* Mobile menu button */}
@@ -99,8 +99,8 @@ function Header() {
               <Image
                 src="/thryvia-logo.png"
                 alt="Thryvia Logo"
-                width={120}
-                height={30}
+                width={80}
+                height={20}
               />
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -177,16 +177,21 @@ function Hero() {
           <Image
             src="/hero.jpg"
             alt="PC hub"
-            width={500}
-            height={500}
+            width={600}
+            height={600}
             className="w-full rounded-[10px]"
           />
         </div>
       </div>
       <div className="hero-wave">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 1440 320" 
+          preserveAspectRatio="none"
+          className="w-full h-auto"
+        >
           <path
-            fill="ffffff"
+            fill="#ffffff"
             fillOpacity="1"
             d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,138.7C672,128,768,160,864,165.3C960,171,1056,149,1152,154.7C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           ></path>
@@ -198,99 +203,99 @@ function Hero() {
 
 function Tools() {
   return (
-    <section className="bg-white py-12 px-4 sm:py-16 sm:px-6 md:px-20">
+    <section className="bg-white py-8 sm:py-12 px-4 sm:px-6 md:px-20">
       <div className="max-w-7xl mx-auto">
-        <header className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#222] uppercase tracking-wide mb-3 sm:mb-4">
+        <header className="text-center mb-6 sm:mb-8 md:mb-12">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#222] uppercase tracking-wide mb-2 sm:mb-3 md:mb-4">
             Simple Tools for Remote Success
           </h2>
-          <p className="text-gray-600 text-base sm:text-lg font-medium">
+          <p className="text-gray-600 text-sm sm:text-base md:text-lg font-medium">
             Everything you need to thrive in your remote work journey.
           </p>
         </header>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-14">
-          <div className="p-6 sm:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-14">
+          <div className="p-4 sm:p-6 md:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center">
             <div className="p-2 sm:p-3 rounded-full bg-red-500 text-white mb-3 sm:mb-4">
-              <Activity size={40} className="sm:w-[50px] sm:h-[50px]" />
+              <Activity size={32} className="sm:w-10 sm:h-10 md:w-[50px] md:h-[50px]" />
             </div>
-            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-5 text-center">
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 md:mb-5 text-center">
               Productivity tracking
             </h2>
-            <p className="text-center mb-6 sm:mb-8 text-[#333] text-sm sm:text-base">
+            <p className="text-center mb-4 sm:mb-6 md:mb-8 text-[#333] text-xs sm:text-sm md:text-base">
               Track your productivity and recieive insighs to optimize your
               workflow for better results.
             </p>
             <a
               href="https://google.com"
-              className="text-sm sm:text-md font-normal bg-red-50 p-2 sm:p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
+              className="text-xs sm:text-sm md:text-base font-normal bg-red-50 p-2 sm:p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
             >
               Learn more
             </a>
           </div>
-          <div className="p-6 sm:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center">
+          <div className="p-4 sm:p-6 md:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center">
             <div className="p-2 sm:p-3 rounded-full bg-red-500 text-white mb-3 sm:mb-4">
-              <Heart size={40} className="sm:w-[50px] sm:h-[50px]" />
+              <Heart size={32} className="sm:w-10 sm:h-10 md:w-[50px] md:h-[50px]" />
             </div>
-            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-5 text-center">Mental Wellbeing</h2>
-            <p className="text-center mb-6 sm:mb-8 text-[#333] text-sm sm:text-base">
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 md:mb-5 text-center">Mental Wellbeing</h2>
+            <p className="text-center mb-4 sm:mb-6 md:mb-8 text-[#333] text-xs sm:text-sm md:text-base">
               Access resources designed to support your mental health and
               maintain work-life balance.
             </p>
             <a
               href="https://google.com"
-              className="text-sm sm:text-md font-normal bg-red-50 p-2 sm:p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
+              className="text-xs sm:text-sm md:text-base font-normal bg-red-50 p-2 sm:p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
             >
               Learn more
             </a>
           </div>
-          <div className="p-6 sm:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center sm:col-span-2 lg:col-span-1">
+          <div className="p-4 sm:p-6 md:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center sm:col-span-2 lg:col-span-1">
             <div className="p-2 sm:p-3 rounded-full bg-red-500 text-white mb-3 sm:mb-4">
-              <Users size={40} className="sm:w-[50px] sm:h-[50px]" />
+              <Users size={32} className="sm:w-10 sm:h-10 md:w-[50px] md:h-[50px]" />
             </div>
-            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-5 text-center">
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 md:mb-5 text-center">
               Professional Mentorship
             </h2>
-            <p className="text-center mb-6 sm:mb-8 text-[#333] text-sm sm:text-base">
+            <p className="text-center mb-4 sm:mb-6 md:mb-8 text-[#333] text-xs sm:text-sm md:text-base">
               Connect with experienced professionals for career guidance and
               growth opportunities.
             </p>
             <a
               href="https://google.com"
-              className="text-sm sm:text-md font-normal bg-red-50 p-2 sm:p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
+              className="text-xs sm:text-sm md:text-base font-normal bg-red-50 p-2 sm:p-3 rounded-lg hover:text-red-500 hover:underline transitions-all duration-300"
             >
               Learn more
             </a>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 w-full bg-gray-100 rounded-3xl overflow-hidden">
-          <div className="py-8 px-14">
-            <h1 className="text-3xl font-semibold mb-4 text-[#222]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 w-full bg-gray-100 rounded-2xl sm:rounded-3xl overflow-hidden">
+          <div className="py-6 sm:py-8 px-6 sm:px-10 md:px-14">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-3 sm:mb-4 text-[#222]">
               Built for Remote Workers
             </h1>
-            <p className="text-[16px] leading-7 text-[#444] mb-6">
+            <p className="text-sm sm:text-base leading-6 sm:leading-7 text-[#444] mb-4 sm:mb-6">
               Our platform addresses the unique challenges of remote work
               through simple, focused tools.
             </p>
-            <ul className="flex flex-col items-start gap-5 text-[16px] text-[#222]">
+            <ul className="flex flex-col items-start gap-3 sm:gap-5 text-sm sm:text-base text-[#222]">
               <li className="flex gap-2 justify-center items-center">
-                <Check size={20} />
+                <Check size={16} className="sm:w-5 sm:h-5" />
                 Personalized productivity insights
               </li>
               <li className="flex gap-2 justify-center items-center">
-                <Check size={20} />
+                <Check size={16} className="sm:w-5 sm:h-5" />
                 Daily mental health check-ins
               </li>
               <li className="flex gap-2 justify-center items-center">
-                <Check size={20} />
+                <Check size={16} className="sm:w-5 sm:h-5" />
                 On-demand professional mentorship
               </li>
               <li className="flex gap-2 justify-center items-center">
-                <Check size={20} />
+                <Check size={16} className="sm:w-5 sm:h-5" />
                 Team collaboration tools
               </li>
               <li className="flex gap-2 justify-center items-center">
-                <Check size={20} />
+                <Check size={16} className="sm:w-5 sm:h-5" />
                 Progress tracking and reports
               </li>
             </ul>
@@ -302,7 +307,7 @@ function Tools() {
               width={600}
               height={100}
               priority
-              className="object-cover"
+              className="object-cover w-full h-full"
             />
           </div>
         </div>
@@ -313,16 +318,16 @@ function Tools() {
 
 function Review() {
   return (
-    <section className="bg-gray-100 py-16 px-6 md:px-20 text-gray-800">
+    <section className="bg-gray-100 py-12 sm:py-16 px-4 sm:px-6 md:px-20 text-gray-800">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold mb-6 text-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-center">
           What Our Users Say
         </h2>
-        <p className="text-center max-w-xl mx-auto mb-12 text-lg">
+        <p className="text-center max-w-xl mx-auto mb-8 sm:mb-12 text-sm sm:text-base md:text-lg">
           Join thousands of remote workers who have transformed their work
           experience with Thryvia.
         </p>
-        <div className="space-y-12 max-w-5xl mx-auto">
+        <div className="space-y-8 sm:space-y-12 max-w-5xl mx-auto">
           {[
             {
               name: "Alex Johnson",
@@ -343,53 +348,57 @@ function Review() {
               text: "As someone who struggled with work-life balance, the mental wellbeing resources have been a game-changer. I feel more focused, less stressed, and more productive than ever.",
             },
           ].map(({ name, role, image, text }, i) => (
-            <blockquote key={i} className="border-l-4 border-orange-500 pl-6">
-              <p className="mb-4 italic text-gray-700">{text}</p>
-              <footer className="flex items-center gap-4">
+            <blockquote key={i} className="border-l-4 border-orange-500 pl-4 sm:pl-6">
+              <p className="mb-3 sm:mb-4 italic text-gray-700 text-sm sm:text-base">{text}</p>
+              <footer className="flex items-center gap-3 sm:gap-4">
                 <Image
                   src={image}
                   alt={`Customer ${name}`}
-                  width={50}
-                  height={50}
-                  className="rounded-full"
+                  width={40}
+                  height={40}
+                  className="rounded-full w-10 h-10 sm:w-12 sm:h-12"
                   priority
                 />
                 <div>
-                  <p className="font-semibold text-gray-900">{name}</p>
-                  <p className="text-sm text-gray-600">{role}</p>
+                  <p className="font-semibold text-gray-900 text-sm sm:text-base">{name}</p>
+                  <p className="text-xs sm:text-sm text-gray-600">{role}</p>
                 </div>
               </footer>
             </blockquote>
           ))}
         </div>
-        <div className="mt-20 flex justify-center items-center gap-18">
+        <div className="mt-16 sm:mt-20 flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-18">
           <Image
             src="/microsoft.png"
             alt={`Microsoft logo`}
-            width={150}
-            height={100}
+            width={100}
+            height={50}
+            className="w-16 h-8 sm:w-20 sm:h-10 md:w-24 md:h-12"
             priority
           />
 
           <Image
             src="/shopify-logo.png"
             alt={`Shopify logo`}
-            width={150}
-            height={100}
+            width={100}
+            height={50}
+            className="w-16 h-8 sm:w-20 sm:h-10 md:w-24 md:h-12"
             priority
           />
           <Image
             src="/atlassian.png"
             alt={`Atlassian logo`}
-            width={150}
-            height={100}
+            width={120}
+            height={80}
+            className="w-16 h-10 sm:w-20 sm:h-12 md:w-24 md:h-14"
             priority
           />
           <Image
             src="/Dropbox.png"
             alt={`Dropbox logo`}
-            width={150}
-            height={100}
+            width={120}
+            height={80}
+            className="w-16 h-10 sm:w-20 sm:h-12 md:w-24 md:h-14"
             priority
           />
         </div>
@@ -433,25 +442,25 @@ function Accordion() {
   ];
 
   return (
-    <section className="py-16 px-6 md:px-20 max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold mb-4 text-center">
+    <section className="py-12 sm:py-16 px-4 sm:px-6 md:px-20 max-w-4xl mx-auto">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-center">
         Frequently Asked Questions
       </h2>
-      <p className="mb-10 text-gray-700 text-center">
+      <p className="mb-8 sm:mb-10 text-gray-700 text-center text-sm sm:text-base">
         Find answers to common questions about Thryvia and how it can help you
         thrive in remote work.
       </p>
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {faqs.map(({ question, answer }, i) => (
           <AccordionItem question={question} answer={answer} key={i} />
         ))}
       </div>
-      <div className="mt-12 text-center">
-        <h3 className="text-2xl font-semibold mb-2">Still have questions?</h3>
-        <p className="mb-6 text-gray-700">
+      <div className="mt-10 sm:mt-12 text-center">
+        <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-sm sm:text-base">Still have questions?</h3>
+        <p className="mb-4 sm:mb-6 text-gray-700 text-sm sm:text-base">
           Contact our support team for more information or to schedule a demo.
         </p>
-        <button className="btn btn-main bg-orange-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-orange-700 transition">
+        <button className="btn btn-main bg-orange-600 text-white font-semibold px-6 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-orange-700 transition text-sm sm:text-base">
           Contact us
         </button>
       </div>
@@ -472,128 +481,129 @@ function AccordionItem({ question, answer }: AccordionItemProps) {
   }
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
       <div
-        className="flex justify-between items-center mb-4 cursor-pointer"
+        className="flex justify-between items-center mb-3 sm:mb-4 cursor-pointer"
         onClick={handleToggle}
       >
-        <p className="text-orange-600 font-semibold hover:underline">
+        <p className="text-orange-600 font-semibold hover:underline text-sm sm:text-base pr-2">
           {question}
         </p>
-        <span className="text-orange-600 font-bold text-xl select-none">
+        <span className="text-orange-600 font-bold text-lg sm:text-xl select-none flex-shrink-0">
           {isOpen ? "-" : "+"}
         </span>
       </div>
 
-      {isOpen && <div>{answer}</div>}
+      {isOpen && <div className="text-sm sm:text-base text-gray-700 leading-relaxed">{answer}</div>}
     </div>
   );
 }
 
 function Footer() {
   return (
-    <footer className="bg-gray-800 text-gray-300 pt-6 pb-10 px-6 md:px-20">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
-        <div className="max-w-sm flex flex-col gap-4 justify-center align-start">
+    <footer className="bg-gray-800 text-gray-300 pt-6 pb-10 px-4 sm:px-6 md:px-20">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8 sm:gap-12">
+        <div className="max-w-sm flex flex-col gap-3 sm:gap-4 justify-center align-start">
           <Image
             src="/thryvia-logo.png"
-            width={200}
-            height={50}
+            width={160}
+            height={40}
             alt="Thryvia Logo"
+            className="w-32 sm:w-40 md:w-48"
           />
-          <p>Your path to thriving in the remote work environment.</p>
-          <div className="flex space-x-6">
+          <p className="text-sm sm:text-base">Your path to thriving in the remote work environment.</p>
+          <div className="flex space-x-4 sm:space-x-6">
             {/* Social icons placeholders */}
             <FaFacebook
-              size={25}
-              className="hover:text-gray-500 transition-color duration-300 cursor-pointer"
+              size={20}
+              className="sm:w-6 sm:h-6 hover:text-gray-500 transition-color duration-300 cursor-pointer"
             />
             <FaLinkedinIn
-              size={25}
-              className="hover:text-gray-500 transition-color duration-300 cursor-pointer"
+              size={20}
+              className="sm:w-6 sm:h-6 hover:text-gray-500 transition-color duration-300 cursor-pointer"
             />
             <FaInstagram
-              size={25}
-              className="hover:text-gray-500 transition-color duration-300 cursor-pointer"
+              size={20}
+              className="sm:w-6 sm:h-6 hover:text-gray-500 transition-color duration-300 cursor-pointer"
             />
             <FaTwitter
-              size={25}
-              className="hover:text-gray-500 transition-color duration-300 cursor-pointer"
+              size={20}
+              className="sm:w-6 sm:h-6 hover:text-gray-500 transition-color duration-300 cursor-pointer"
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-14 text-md text-gray-400">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 md:gap-14 text-sm sm:text-base text-gray-400">
           <div>
-            <h2 className="font-semibold text-white mb-3">Platform</h2>
-            <ul className="space-y-3">
+            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Platform</h2>
+            <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
               <li>
-                <a href="">Features</a>
+                <a href="" className="hover:text-white transition-colors">Features</a>
               </li>
               <li>
-                <a href="">Testimonials</a>
+                <a href="" className="hover:text-white transition-colors">Testimonials</a>
               </li>
               <li>
-                <a href="">FAQ</a>
+                <a href="" className="hover:text-white transition-colors">FAQ</a>
               </li>
               <li>
-                <a href="">Pricing</a>
+                <a href="" className="hover:text-white transition-colors">Pricing</a>
               </li>
             </ul>
           </div>
           <div>
-            <h2 className="font-semibold text-white mb-3">Resources</h2>
-            <ul className="space-y-3">
+            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Resources</h2>
+            <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
               <li>
-                <a href="">Blog</a>
+                <a href="" className="hover:text-white transition-colors">Blog</a>
               </li>
               <li>
-                <a href="">Guides</a>
+                <a href="" className="hover:text-white transition-colors">Guides</a>
               </li>
               <li>
-                <a href="">Webinar</a>
+                <a href="" className="hover:text-white transition-colors">Webinar</a>
               </li>
               <li>
-                <a href="">Support</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h2 className="font-semibold text-white mb-3">Company</h2>
-            <ul className="space-y-3">
-              <li>
-                <a href="">About Us</a>
-              </li>
-              <li>
-                <a href="">Careers</a>
-              </li>
-              <li>
-                <a href="">Press Kit</a>
-              </li>
-              <li>
-                <a href="">Contact</a>
+                <a href="" className="hover:text-white transition-colors">Support</a>
               </li>
             </ul>
           </div>
           <div>
-            <h2 className="font-semibold text-white mb-3">Contact Us</h2>
-            <address className="not-italic space-y-3">
+            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Company</h2>
+            <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
+              <li>
+                <a href="" className="hover:text-white transition-colors">About Us</a>
+              </li>
+              <li>
+                <a href="" className="hover:text-white transition-colors">Careers</a>
+              </li>
+              <li>
+                <a href="" className="hover:text-white transition-colors">Press Kit</a>
+              </li>
+              <li>
+                <a href="" className="hover:text-white transition-colors">Contact</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Contact Us</h2>
+            <address className="not-italic space-y-2 sm:space-y-3 text-xs sm:text-sm">
               <p>info@thryvia.com</p>
               <p>+1 (234) 567-890</p>
             </address>
           </div>
         </div>
       </div>
-      <hr className="my-8 border-gray-700" />
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between text-xs text-gray-500 px-6 md:px-20">
+      <hr className="my-6 sm:my-8 border-gray-700" />
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between text-xs text-gray-500 px-4 sm:px-6 md:px-20">
         <span>&copy; 2025 Thryvia. All rights reserved.</span>
-        <div className="flex space-x-6 mt-2 md:mt-0">
-          <a href="https://facebook.com" className="hover:text-white">
+        <div className="flex space-x-4 sm:space-x-6 mt-2 md:mt-0">
+          <a href="https://facebook.com" className="hover:text-white transition-colors">
             Privacy Policy
           </a>
-          <a href="https://facebook.com" className="hover:text-white">
+          <a href="https://facebook.com" className="hover:text-white transition-colors">
             Terms of Service
           </a>
-          <a href="https://facebook.com" className="hover:text-white">
+          <a href="https://facebook.com" className="hover:text-white transition-colors">
             Cookie Policy
           </a>
         </div>

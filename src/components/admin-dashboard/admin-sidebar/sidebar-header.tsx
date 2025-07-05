@@ -7,7 +7,7 @@ interface SidebarHeaderProps {
 
 const SidebarHeader: React.FC<SidebarHeaderProps> = ({ isExpanded }) => {
   return (
-    <div className="px-4 py-5 flex items-center">
+    <div className="px-4 py-5 flex items-center ml-10 lg:ml-0">
       <Workflow size={28} className="text-blue-400 min-w-7" />
       <h1
         className={`

@@ -7,6 +7,7 @@ import { MentorSidebar } from "./mentor-sidebar";
 import { ChatInterface } from "./chat-interface";
 import toast from "react-hot-toast";
 import { IUser } from "@/interfaces";
+import { ArrowLeft, Menu } from "lucide-react";
 
 interface Message {
   id: number;
@@ -19,6 +20,7 @@ interface Message {
 
 export default function WorkersChatDashboard() {
   const [selectedMentor, setSelectedMentor] = useState<IUser | null>(null);
+  const [showChat, setShowChat] = useState(false); // for mobile view
   const [currentWorker, setCurrentWorker] = useState<any>();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoadingWorker, setIsLoadingWorker] = useState(true);
@@ -246,44 +248,98 @@ export default function WorkersChatDashboard() {
 
   return (
     <div className="h-screen flex bg-gray-50">
-      <MentorSidebar
-        mentors={mentors}
-        selectedMentor={selectedMentor}
-        onSelectMentor={async (mentor: IUser) => {
-          // Explicitly type mentor as User
-          setSelectedMentor(mentor);
-          const msgs = await fetchMessages(mentor.id);
-          setMessages(msgs);
-        }}
-      />
-      <div className="flex-1 flex flex-col">
+      {/* Desktop: show both, Mobile: show one at a time, each at full width */}
+      {/* Mentor list/sidebar: full width on mobile when chat is not open */}
+      <div
+        className={
+          `transition-all duration-500 ease-in-out ` +
+          (showChat && selectedMentor
+            ? "hidden lg:block lg:w-80"
+            : "fixed inset-0 z-30 bg-white w-full h-full lg:static lg:w-80 flex-shrink-0")
+        }
+      >
+        <MentorSidebar
+          mentors={mentors}
+          selectedMentor={selectedMentor}
+          onSelectMentor={async (mentor: IUser) => {
+            setSelectedMentor(mentor);
+            setShowChat(true);
+            const msgs = await fetchMessages(mentor.id);
+            setMessages(msgs);
+          }}
+        />
+      </div>
+      {/* Chat overlay: full width on mobile when chat is open */}
+      <div
+        className={
+          `transition-all duration-500 ease-in-out ` +
+          (showChat && selectedMentor
+            ? "fixed inset-0 z-40 bg-white w-full h-full lg:static lg:w-auto flex-1 flex flex-col"
+            : "hidden lg:flex flex-1 flex-col")
+        }
+      >
         {selectedMentor ? (
-          <ChatInterface
-            currentUser={currentWorker}
-            recipient={selectedMentor}
-            messages={messages}
-            onSendMessage={async (content: string) => {
-              const msg = {
-                id: Math.floor(Math.random() * 1000000), // Temporary ID, replace with actual ID generation
-                sender_id: currentWorker.id,
-                recipient_id: selectedMentor.id,
-                content,
-                chat_session_id: `${currentWorker.id}-${selectedMentor.id}`,
-                created_at: new Date(),
-              };
-              setMessages((prev) => [...prev, msg]);
-              const { error } = await supabase
-                .from("chat_messages")
-                .insert(msg);
+          <div className="flex flex-col h-full">
+            {/* Chat header with menu and back button on mobile */}
+            <div className="lg:hidden flex items-center p-4 border-b border-gray-200 bg-white">
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <button
+                  className="p-2 rounded-full hover:bg-gray-100"
+                  aria-label="Open menu"
+                  style={{ minWidth: 40 }}
+                >
+                  <Menu size={24} />
+                </button>
+                <button
+                  onClick={() => setShowChat(false)}
+                  className="p-2 rounded-full hover:bg-gray-100"
+                  aria-label="Back to mentor list"
+                  style={{ minWidth: 40 }}
+                >
+                  <ArrowLeft size={24} />
+                </button>
+              </div>
+              <div className="flex items-center flex-1 min-w-0 ml-4 overflow-hidden">
+                <img
+                  src={selectedMentor.avatar_url || "/default-avatar.png"}
+                  alt={selectedMentor.first_name + " " + selectedMentor.last_name}
+                  className="w-8 h-8 rounded-full object-cover mr-2 flex-shrink-0"
+                />
+                <span className="font-semibold text-gray-900 truncate">
+                  {selectedMentor.first_name} {selectedMentor.last_name}
+                </span>
+              </div>
+            </div>
+            {/* Chat interface (hide header on desktop, show on mobile) */}
+            <div className="flex-1 flex flex-col min-h-0">
+              <ChatInterface
+                currentUser={currentWorker}
+                recipient={selectedMentor}
+                messages={messages}
+                onSendMessage={async (content: string) => {
+                  const msg = {
+                    id: Math.floor(Math.random() * 1000000),
+                    sender_id: currentWorker.id,
+                    recipient_id: selectedMentor.id,
+                    content,
+                    chat_session_id: `${currentWorker.id}-${selectedMentor.id}`,
+                    created_at: new Date(),
+                  };
+                  setMessages((prev) => [...prev, msg]);
+                  const { error } = await supabase
+                    .from("chat_messages")
+                    .insert(msg);
 
-              if (error) {
-                console.error("Error sending message:", error);
-                toast.error("Failed to send message. Please try again.");
-              }
-            }}
-          />
+                  if (error) {
+                    console.error("Error sending message:", error);
+                    toast.error("Failed to send message. Please try again.");
+                  }
+                }}
+              />
+            </div>
+          </div>
         ) : (
-          <div className="flex-1 flex items-center justify-center bg-white">
+          <div className="hidden lg:flex flex-1 items-center justify-center bg-white">
             <div className="text-center">
               <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg

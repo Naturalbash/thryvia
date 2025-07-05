@@ -76,7 +76,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors shadow-lg"
         aria-label="Toggle mobile menu"
       >
-        {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
+        {isMobileOpen ? <X size={18} /> : <Menu size={18} />}
       </button>
 
       {/* Desktop Sidebar - Always visible, hover expandable */}
@@ -117,8 +117,8 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             ))}
           </div>
 
-          {/* Bottom navigation items - Always at bottom */}
-          <div className="mt-auto py-2">
+          {/* Bottom navigation items - Always at bottom with more spacing */}
+          <div className="mt-auto py-2 mb-4">
             {bottomNavItems.map((item) => (
               <SidebarItem
                 id={item.id}
@@ -160,8 +160,8 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               ))}
             </div>
 
-            {/* Bottom navigation items - Always at bottom */}
-            <div className="mt-auto py-2">
+            {/* Bottom navigation items - Always at bottom with more spacing */}
+            <div className="mt-auto py-2 mb-4">
               {bottomNavItems.map((item) => (
                 <SidebarItem
                   id={item.id}

@@ -82,7 +82,11 @@ export const ChatInterface = ({
             key={message.id}
             message={message}
             currentUser={currentUser}
-            recipientAvatar={recipient.avatar_url}
+            recipientAvatar={
+              message.sender_id === currentUser.id
+                ? (currentUser.avatar_url || "/default-avatar.png")
+                : (recipient.avatar_url || "/default-avatar.png")
+            }
           />
         ))}
         <div ref={messagesEndRef} />

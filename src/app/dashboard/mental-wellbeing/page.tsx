@@ -16,22 +16,22 @@ export default function Page() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
         {/* Left column */}
         <div className="flex flex-col gap-3 sm:gap-4">
-          <DailyCheckinCalendar />
-          <HabitTracker onHabitsChange={handleHabitsUpdate} />
-        </div>
+        <DailyCheckinCalendar />
+        <HabitTracker onHabitsChange={handleHabitsUpdate} />
+      </div>
         
         {/* Center column */}
         <div className="lg:col-span-1">
-          <MentalHealthLibrary />
-        </div>
+        <MentalHealthLibrary />
+      </div>
         
         {/* Right column */}
         <div className="flex flex-col gap-3 sm:gap-4">
-          <ProgressIndicator
-            habitsProgress={habitsProgress}
-            overallProgress={overallProgress}
-          />
-          <MindfulnessTools />
+        <ProgressIndicator
+          habitsProgress={habitsProgress}
+          overallProgress={overallProgress}
+        />
+        <MindfulnessTools />
         </div>
       </div>
     </div>

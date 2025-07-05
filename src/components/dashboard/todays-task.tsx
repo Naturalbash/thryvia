@@ -54,8 +54,8 @@ export function TodaysTask({ tasks: data }: TodaysTaskProps) {
       setTasks(
         tasks.map((task) =>
           task.id === id ? { ...task, completed: !newCompletedStatus } : task
-        )
-      );
+      )
+    );
       console.error("Failed to update task:", error);
     } finally {
       // Clear loading state

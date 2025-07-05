@@ -22,27 +22,24 @@ export default async function AdminDashboard() {
             <TabsList className="grid w-full grid-cols-3 bg-gray-100 h-auto p-1">
               <TabsTrigger
                 value="projects"
-                className="flex items-center gap-1 sm:gap-2 lg:gap-4 p-2 sm:p-3 text-xs sm:text-sm lg:text-base"
+                className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 lg:gap-4 p-2 sm:p-3 text-xs sm:text-sm lg:text-base min-h-[56px]"
               >
-                <FolderOpen className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">Projects</span>
-                <span className="sm:hidden">Proj</span>
+                <FolderOpen className="h-5 w-5 mb-1 sm:mb-0" />
+                <span className="text-xs sm:text-base font-medium mt-1 sm:mt-0">Projects</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="habits" 
-                className="flex items-center gap-1 sm:gap-2 p-2 sm:p-3 text-xs sm:text-sm lg:text-base"
+                className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 p-2 sm:p-3 text-xs sm:text-sm lg:text-base min-h-[56px]"
               >
-                <Target className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">Habits</span>
-                <span className="sm:hidden">Habits</span>
+                <Target className="h-5 w-5 mb-1 sm:mb-0" />
+                <span className="text-xs sm:text-base font-medium mt-1 sm:mt-0">Habits</span>
               </TabsTrigger>
               <TabsTrigger
                 value="resources"
-                className="flex items-center gap-1 sm:gap-2 p-2 sm:p-3 text-xs sm:text-sm lg:text-base"
+                className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 p-2 sm:p-3 text-xs sm:text-sm lg:text-base min-h-[56px]"
               >
-                <BookOpen className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">Resources</span>
-                <span className="sm:hidden">Res</span>
+                <BookOpen className="h-5 w-5 mb-1 sm:mb-0" />
+                <span className="text-xs sm:text-base font-medium mt-1 sm:mt-0">Resources</span>
               </TabsTrigger>
             </TabsList>
             <ProjectsTab />

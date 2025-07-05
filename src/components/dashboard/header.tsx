@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { UserInfo } from "@/hooks/user";
 
-export default function DashboardHeader() {
+export default function DashboardHeader({ onMobileMenuClick }: { onMobileMenuClick?: () => void }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -73,15 +73,24 @@ export default function DashboardHeader() {
   return (
     <>
       <header className="top-0 z-10 w-full bg-slate-300 border-b border-gray-200 shadow-sm px-3 sm:px-4 md:px-6 py-2 sm:py-3">
-        <div className="mx-auto flex items-center justify-between">
-          <div className="flex items-center">
-            {/* Add left margin on mobile to avoid menu button overlap */}
-            <h1 className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-800 ml-12 lg:ml-0">
+        <div className="mx-auto flex items-center justify-between w-full">
+          {/* Mobile: Center menu icon and title together */}
+          <div className="flex items-center w-full md:w-auto justify-center md:justify-start">
+            {onMobileMenuClick && (
+              <button
+                className="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                aria-label="Open menu"
+                onClick={onMobileMenuClick}
+              >
+                <Menu className="h-6 w-6 text-gray-800" />
+              </button>
+            )}
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 ml-1">
               Dashboard
             </h1>
           </div>
 
-          <div className="flex items-center space-x-2 sm:space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4 ml-auto">
             {/* Desktop Search */}
             <div
               className={cn(
@@ -128,7 +137,7 @@ export default function DashboardHeader() {
                 aria-expanded={isDropdownOpen}
               >
                 <Avatar>
-                  <AvatarImage src={userInfo.avatarUrl} />
+                  <AvatarImage src={userInfo.avatarUrl || "/default-avatar.png"} />
                   <AvatarFallback>
                     {userInfo.firstName[0] || "U"}
                     {userInfo.lastName[0] || ""}
