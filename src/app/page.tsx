@@ -51,7 +51,7 @@ function Header() {
           alt="Thryvia Logo"
           width={180}
           height={50}
-          className="w-16 sm:w-20 md:w-24 lg:w-32"
+          className="w-24 sm:w-28 md:w-32 lg:w-40"
         />
         
         {/* Mobile menu button */}
@@ -93,8 +93,8 @@ function Header() {
 
       {/* Mobile menu overlay */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50">
-          <div className="fixed top-0 right-0 h-full w-64 bg-white shadow-lg p-6">
+        <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 animate-fadeIn">
+          <div className="fixed top-0 right-0 h-full w-64 bg-white shadow-lg p-6 transition-transform duration-300 animate-slideInRight">
             <div className="flex justify-between items-center mb-8">
               <Image
                 src="/thryvia-logo.png"
@@ -142,9 +142,9 @@ function Header() {
 
 function Hero() {
   return (
-    <section className="hero">
+    <section className="hero mt-8 sm:mt-0">
       <div className="hero-box">
-        <div className="hero-content">
+        <div className="hero-content flex flex-col items-center text-center w-full">
           <h2 className="hero-title">
             Find your{" "}
             <span className="hero-text-highlight">Path to Thriving</span> in
@@ -154,23 +154,23 @@ function Hero() {
             Enhance productivity, improve wellbeing and grow professionally with
             our simple yet powerful platform for remote workers
           </p>
-          <div className="flex hero-btns">
+          <div className="flex hero-btns justify-center">
             <button className="btn btn-main">Get Started</button>
             <button className="btn btn-outline">Learn More &darr;</button>
           </div>
-          <div className="flex hero-stats">
-            <div className="flex hero-stat">
-              <h2 className="hero-stat-num">10k+</h2>
-              <p className="hero-stat-text">Remote Workers</p>
-            </div>
-            <div className="flex hero-stat">
-              <h2 className="hero-stat-num"> 200+</h2>
-              <p className="hero-stat-text">Companies</p>
-            </div>
-            <div className="flex hero-stat">
-              <h2 className="hero-stat-num">95%</h2>
-              <p className="hero-stat-text">Satisfaction</p>
-            </div>
+        </div>
+        <div className="flex hero-stats w-full justify-center mt-4">
+          <div className="flex hero-stat">
+            <h2 className="hero-stat-num">10k+</h2>
+            <p className="hero-stat-text">Remote Workers</p>
+          </div>
+          <div className="flex hero-stat">
+            <h2 className="hero-stat-num"> 200+</h2>
+            <p className="hero-stat-text">Companies</p>
+          </div>
+          <div className="flex hero-stat">
+            <h2 className="hero-stat-num">95%</h2>
+            <p className="hero-stat-text">Satisfaction</p>
           </div>
         </div>
         <div className="hero-img-box">
