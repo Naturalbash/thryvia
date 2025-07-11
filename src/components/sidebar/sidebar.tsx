@@ -28,7 +28,7 @@ const mainNavItems = [
 
 const bottomNavItems = [
   { id: "/dashboard/settings", icon: Settings, text: "Settings" },
-  { id: "logout", icon: LogOut, text: "Logout" },
+  { id: "/sign-in", icon: LogOut, text: "Logout" },
 ];
 
 type SidebarProps = {
@@ -98,7 +98,11 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             className="p-1.5 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors flex justify-center"
             title={isExpanded ? "Collapse Sidebar" : "Expand Sidebar"}
           >
-            {isExpanded ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+            {isExpanded ? (
+              <ChevronLeft size={16} />
+            ) : (
+              <ChevronRight size={16} />
+            )}
           </button>
         </div>
 
@@ -187,9 +191,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       )}
 
       {/* Main Content Area - Always visible and not covered */}
-      <div className="flex-1 bg-slate-100 overflow-auto w-full">
-        {children}
-      </div>
+      <div className="flex-1 bg-slate-100 overflow-auto w-full">{children}</div>
     </div>
   );
 };

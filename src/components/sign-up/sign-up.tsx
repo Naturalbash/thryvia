@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useState, ChangeEvent, FormEvent } from "react";
 import Logo from "next/image";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   firstName: string;
   lastName: string;
-  username: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -20,19 +21,20 @@ export default function SignUp() {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
-    username: "",
     email: "",
     password: "",
     confirmPassword: "",
     role: "",
   });
 
+  const router = useRouter();
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let hasError = false;
@@ -52,6 +54,33 @@ export default function SignUp() {
     }
 
     if (hasError) return;
+
+    const supabase = createClient();
+
+    const { data: user, error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (error) {
+      console.error("Sign up error:", error.message);
+      return;
+    }
+
+    const { error: userError } = await supabase.from("users").insert({
+      id: user.user?.id,
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      email: formData.email,
+      role: formData.role,
+    });
+
+    if (userError) {
+      console.error("User creation error:", userError.message);
+      return;
+    }
+
+    router.push("/confirm-signup");
   };
 
   return (
@@ -68,7 +97,10 @@ export default function SignUp() {
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-2 sm:mb-4 text-slate-800 tracking-wide">
             Create an Account
           </h1>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-2 sm:gap-3 md:gap-4 flex-1 justify-center">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-2 sm:gap-3 md:gap-4 flex-1 justify-center"
+          >
             <div className="flex flex-col sm:flex-row sm:gap-2 gap-2">
               <div className="flex-1">
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
@@ -99,22 +131,6 @@ export default function SignUp() {
                 />
               </div>
             </div>
-
-            <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
-                Username
-              </label>
-              <input
-                type="text"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-                className="w-full px-2 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent placeholder:text-gray-400 text-xs sm:text-sm"
-                placeholder="Choose a username"
-              />
-            </div>
-
             <div>
               <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                 Email
