@@ -2,11 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/utils/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { format } from "date-fns";
 import Image from "next/image";
 import { User } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
@@ -93,28 +91,28 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
       if (!currentMentor?.id) return [];
 
       try {
-      const { data, error } = await supabase
-        .from("chat_messages")
-        .select("*")
-        .eq("chat_session_id", `${workerId}-${currentMentor.id}`)
-        .order("created_at", { ascending: true });
+        const { data, error } = await supabase
+          .from("chat_messages")
+          .select("*")
+          .eq("chat_session_id", `${workerId}-${currentMentor.id}`)
+          .order("created_at", { ascending: true });
 
-      if (error) {
-        console.error("Error fetching messages:", error);
-        toast.error("Failed to fetch messages. Please try again.");
-        return [];
-      }
+        if (error) {
+          console.error("Error fetching messages:", error);
+          toast.error("Failed to fetch messages. Please try again.");
+          return [];
+        }
 
-      return (
-        data?.map((msg) => ({
-          id: msg.id,
-          sender_id: msg.sender_id,
-          recipient_id: msg.recipient_id,
-          content: msg.content,
-          created_at: new Date(msg.created_at),
-          chat_session_id: msg.chat_session_id,
-        })) || []
-      );
+        return (
+          data?.map((msg) => ({
+            id: msg.id,
+            sender_id: msg.sender_id,
+            recipient_id: msg.recipient_id,
+            content: msg.content,
+            created_at: new Date(msg.created_at),
+            chat_session_id: msg.chat_session_id,
+          })) || []
+        );
       } catch (error) {
         console.error("Error in fetchMessages:", error);
         return [];
@@ -131,11 +129,11 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
       .channel(`chat_messages_${selectedWorker.id}_${currentMentor.id}`)
       .on(
         "postgres_changes",
-        { 
-          event: "INSERT", 
-          schema: "public", 
+        {
+          event: "INSERT",
+          schema: "public",
           table: "chat_messages",
-          filter: `chat_session_id=eq.${selectedWorker.id}-${currentMentor.id}`
+          filter: `chat_session_id=eq.${selectedWorker.id}-${currentMentor.id}`,
         },
         async (payload) => {
           console.log("New message received:", payload);
@@ -184,15 +182,15 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
         console.error("Error sending message:", error);
         toast.error("Failed to send message. Please try again.");
         // Remove optimistic update on error
-        setMessages((prev) => prev.filter(msg => msg.id !== tempId));
+        setMessages((prev) => prev.filter((msg) => msg.id !== tempId));
         return;
       }
 
       if (data) {
         // Replace optimistic message with real one
-        setMessages((prev) => 
-          prev.map(msg => 
-            msg.id === tempId 
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === tempId
               ? {
                   id: data.id,
                   sender_id: data.sender_id,
@@ -209,7 +207,7 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
       console.error("Error in handleSendMessage:", error);
       toast.error("Failed to send message. Please try again.");
       // Remove optimistic update on error
-      setMessages((prev) => prev.filter(msg => msg.id !== tempId));
+      setMessages((prev) => prev.filter((msg) => msg.id !== tempId));
     }
   };
 
@@ -281,22 +279,30 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
 
           <Tabs defaultValue="active" className="w-full h-full">
             <TabsList className="w-full grid grid-cols-2 p-2 sm:p-4">
-              <TabsTrigger value="active" className="text-xs sm:text-sm">Active</TabsTrigger>
-              <TabsTrigger value="all" className="text-xs sm:text-sm">All Workers</TabsTrigger>
+              <TabsTrigger value="active" className="text-xs sm:text-sm">
+                Active
+              </TabsTrigger>
+              <TabsTrigger value="all" className="text-xs sm:text-sm">
+                All Workers
+              </TabsTrigger>
             </TabsList>
 
             <ScrollArea className="h-[calc(100vh-280px)] lg:h-[calc(100vh-180px)]">
               <TabsContent value="active" className="m-0">
                 {isLoading ? (
-                  <div className="p-4 text-center text-gray-500">Loading workers...</div>
+                  <div className="p-4 text-center text-gray-500">
+                    Loading workers...
+                  </div>
                 ) : (
                   workers
-                  .filter((worker) => worker.status === "online")
-                  .map((worker) => (
+                    .filter((worker) => worker.status === "online")
+                    .map((worker) => (
                       <div
                         key={worker.id}
                         className={`p-3 sm:p-4 border-b cursor-pointer hover:bg-gray-50 transition-colors ${
-                          selectedWorker?.id === worker.id ? "bg-blue-50 border-blue-200" : ""
+                          selectedWorker?.id === worker.id
+                            ? "bg-blue-50 border-blue-200"
+                            : ""
                         }`}
                         onClick={() => handleWorkerSelect(worker)}
                       >
@@ -324,7 +330,9 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                               </h3>
                               <Badge
                                 variant={
-                                  worker.status === "online" ? "default" : "secondary"
+                                  worker.status === "online"
+                                    ? "default"
+                                    : "secondary"
                                 }
                                 className="text-xs"
                               >
@@ -340,16 +348,20 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                     ))
                 )}
               </TabsContent>
-              
+
               <TabsContent value="all" className="m-0">
                 {isLoading ? (
-                  <div className="p-4 text-center text-gray-500">Loading workers...</div>
+                  <div className="p-4 text-center text-gray-500">
+                    Loading workers...
+                  </div>
                 ) : (
                   workers.map((worker) => (
                     <div
                       key={worker.id}
                       className={`p-3 sm:p-4 border-b cursor-pointer hover:bg-gray-50 transition-colors ${
-                        selectedWorker?.id === worker.id ? "bg-blue-50 border-blue-200" : ""
+                        selectedWorker?.id === worker.id
+                          ? "bg-blue-50 border-blue-200"
+                          : ""
                       }`}
                       onClick={() => handleWorkerSelect(worker)}
                     >
@@ -377,7 +389,9 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                             </h3>
                             <Badge
                               variant={
-                                worker.status === "online" ? "default" : "secondary"
+                                worker.status === "online"
+                                  ? "default"
+                                  : "secondary"
                               }
                               className="text-xs"
                             >
@@ -431,7 +445,9 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                   </button>
                   <img
                     src={selectedWorker.avatar_url || "/default-avatar.png"}
-                    alt={selectedWorker.first_name + " " + selectedWorker.last_name}
+                    alt={
+                      selectedWorker.first_name + " " + selectedWorker.last_name
+                    }
                     className="w-8 h-8 rounded-full object-cover mr-2 flex-shrink-0 ml-2 lg:ml-0"
                   />
                   <span className="font-semibold text-gray-900 truncate">
@@ -441,10 +457,10 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
               </div>
               {/* Chat interface (hide header on desktop, show on mobile) */}
               <div className="flex-1 flex flex-col min-h-0">
-            <ChatInterface
-              currentUser={currentMentor}
-              recipient={selectedWorker}
-              messages={messages}
+                <ChatInterface
+                  currentUser={currentMentor}
+                  recipient={selectedWorker}
+                  messages={messages}
                   onSendMessage={handleSendMessage}
                 />
               </div>
@@ -457,7 +473,8 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                   Select a worker to start mentoring
                 </h3>
                 <p className="text-gray-500">
-                  Choose from the list of workers to begin your mentoring session
+                  Choose from the list of workers to begin your mentoring
+                  session
                 </p>
               </div>
             </div>

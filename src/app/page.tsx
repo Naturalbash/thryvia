@@ -53,14 +53,24 @@ function Header() {
           height={50}
           className="w-24 sm:w-28 md:w-32 lg:w-40"
         />
-        
+
         {/* Mobile menu button */}
         <button
           className="lg:hidden p-2 rounded-md hover:bg-gray-100 transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
           </svg>
         </button>
 
@@ -93,43 +103,74 @@ function Header() {
 
       {/* Mobile menu overlay */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 animate-fadeIn">
-          <div className="fixed top-0 right-0 h-full w-64 bg-white shadow-lg p-6 transition-transform duration-300 animate-slideInRight">
+        <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 animate-fadeIn">
+          <div className="fixed top-0 right-0 h-full w-72 bg-white shadow-lg p-6 animate-slideInRight">
             <div className="flex justify-between items-center mb-8">
               <Image
                 src="/thryvia-logo.png"
                 alt="Thryvia Logo"
-                width={80}
-                height={20}
+                width={100}
+                height={28}
+                className="w-28 h-auto"
               />
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="p-2 rounded-md hover:bg-gray-100"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
             <ul className="space-y-4 mb-8">
               <li>
-                <a href="https://www.google.com" className="block text-lg font-medium text-gray-700 hover:text-orange-600">Features</a>
+                <a
+                  href="https://www.google.com"
+                  className="block text-lg font-medium text-gray-700 hover:text-orange-600"
+                >
+                  Features
+                </a>
               </li>
               <li>
-                <a href="https://www.google.com" className="block text-lg font-medium text-gray-700 hover:text-orange-600">Testimonials</a>
+                <a
+                  href="https://www.google.com"
+                  className="block text-lg font-medium text-gray-700 hover:text-orange-600"
+                >
+                  Testimonials
+                </a>
               </li>
               <li>
-                <a href="https://www.google.com" className="block text-lg font-medium text-gray-700 hover:text-orange-600">FAQ</a>
+                <a
+                  href="https://www.google.com"
+                  className="block text-lg font-medium text-gray-700 hover:text-orange-600"
+                >
+                  FAQ
+                </a>
               </li>
               <li>
-                <a href="https://www.google.com" className="block text-lg font-medium text-gray-700 hover:text-orange-600">Contact</a>
+                <a
+                  href="https://www.google.com"
+                  className="block text-lg font-medium text-gray-700 hover:text-orange-600"
+                >
+                  Contact
+                </a>
               </li>
             </ul>
             <div className="space-y-3">
-              <button className="btn btn-outline w-full">
+              <button className="btn btn-outline w-full text-base py-3">
                 <Link href="/sign-in">Login</Link>
               </button>
-              <button className="btn btn-main w-full">
+              <button className="btn btn-main w-full text-base py-3">
                 <Link href="/sign-up">Sign Up</Link>
               </button>
             </div>
@@ -142,8 +183,10 @@ function Header() {
 
 function Hero() {
   return (
-    <section className="hero mt-8 sm:mt-0">
-      <div className="hero-box">
+    <section className="hero">
+      <div className="hero-box pt-8 sm:pt-0">
+        {" "}
+        {/* Top spacing now inside hero */}
         <div className="hero-content flex flex-col items-center text-center w-full">
           <h2 className="hero-title">
             Find your{" "}
@@ -173,20 +216,20 @@ function Hero() {
             <p className="hero-stat-text">Satisfaction</p>
           </div>
         </div>
-        <div className="hero-img-box">
-          <Image
-            src="/hero.jpg"
-            alt="PC hub"
-            width={600}
-            height={600}
-            className="w-full rounded-[10px]"
-          />
-        </div>
+      </div>
+      <div className="hero-img-box">
+        <Image
+          src="/hero.jpg"
+          alt="PC hub"
+          width={600}
+          height={600}
+          className="w-full rounded-[10px]"
+        />
       </div>
       <div className="hero-wave">
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          viewBox="0 0 1440 320" 
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 320"
           preserveAspectRatio="none"
           className="w-full h-auto"
         >
@@ -216,7 +259,10 @@ function Tools() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-14">
           <div className="p-4 sm:p-6 md:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center">
             <div className="p-2 sm:p-3 rounded-full bg-red-500 text-white mb-3 sm:mb-4">
-              <Activity size={32} className="sm:w-10 sm:h-10 md:w-[50px] md:h-[50px]" />
+              <Activity
+                size={32}
+                className="sm:w-10 sm:h-10 md:w-[50px] md:h-[50px]"
+              />
             </div>
             <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 md:mb-5 text-center">
               Productivity tracking
@@ -234,9 +280,14 @@ function Tools() {
           </div>
           <div className="p-4 sm:p-6 md:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center">
             <div className="p-2 sm:p-3 rounded-full bg-red-500 text-white mb-3 sm:mb-4">
-              <Heart size={32} className="sm:w-10 sm:h-10 md:w-[50px] md:h-[50px]" />
+              <Heart
+                size={32}
+                className="sm:w-10 sm:h-10 md:w-[50px] md:h-[50px]"
+              />
             </div>
-            <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 md:mb-5 text-center">Mental Wellbeing</h2>
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 md:mb-5 text-center">
+              Mental Wellbeing
+            </h2>
             <p className="text-center mb-4 sm:mb-6 md:mb-8 text-[#333] text-xs sm:text-sm md:text-base">
               Access resources designed to support your mental health and
               maintain work-life balance.
@@ -250,7 +301,10 @@ function Tools() {
           </div>
           <div className="p-4 sm:p-6 md:p-8 rounded-md shadow-md bg-gray-20 flex flex-col justify-center items-center sm:col-span-2 lg:col-span-1">
             <div className="p-2 sm:p-3 rounded-full bg-red-500 text-white mb-3 sm:mb-4">
-              <Users size={32} className="sm:w-10 sm:h-10 md:w-[50px] md:h-[50px]" />
+              <Users
+                size={32}
+                className="sm:w-10 sm:h-10 md:w-[50px] md:h-[50px]"
+              />
             </div>
             <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 md:mb-5 text-center">
               Professional Mentorship
@@ -348,8 +402,13 @@ function Review() {
               text: "As someone who struggled with work-life balance, the mental wellbeing resources have been a game-changer. I feel more focused, less stressed, and more productive than ever.",
             },
           ].map(({ name, role, image, text }, i) => (
-            <blockquote key={i} className="border-l-4 border-orange-500 pl-4 sm:pl-6">
-              <p className="mb-3 sm:mb-4 italic text-gray-700 text-sm sm:text-base">{text}</p>
+            <blockquote
+              key={i}
+              className="border-l-4 border-orange-500 pl-4 sm:pl-6"
+            >
+              <p className="mb-3 sm:mb-4 italic text-gray-700 text-sm sm:text-base">
+                {text}
+              </p>
               <footer className="flex items-center gap-3 sm:gap-4">
                 <Image
                   src={image}
@@ -360,7 +419,9 @@ function Review() {
                   priority
                 />
                 <div>
-                  <p className="font-semibold text-gray-900 text-sm sm:text-base">{name}</p>
+                  <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                    {name}
+                  </p>
                   <p className="text-xs sm:text-sm text-gray-600">{role}</p>
                 </div>
               </footer>
@@ -456,7 +517,9 @@ function Accordion() {
         ))}
       </div>
       <div className="mt-10 sm:mt-12 text-center">
-        <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-sm sm:text-base">Still have questions?</h3>
+        <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-sm sm:text-base">
+          Still have questions?
+        </h3>
         <p className="mb-4 sm:mb-6 text-gray-700 text-sm sm:text-base">
           Contact our support team for more information or to schedule a demo.
         </p>
@@ -494,7 +557,11 @@ function AccordionItem({ question, answer }: AccordionItemProps) {
         </span>
       </div>
 
-      {isOpen && <div className="text-sm sm:text-base text-gray-700 leading-relaxed">{answer}</div>}
+      {isOpen && (
+        <div className="text-sm sm:text-base text-gray-700 leading-relaxed">
+          {answer}
+        </div>
+      )}
     </div>
   );
 }
@@ -511,7 +578,9 @@ function Footer() {
             alt="Thryvia Logo"
             className="w-32 sm:w-40 md:w-48"
           />
-          <p className="text-sm sm:text-base">Your path to thriving in the remote work environment.</p>
+          <p className="text-sm sm:text-base">
+            Your path to thriving in the remote work environment.
+          </p>
           <div className="flex space-x-4 sm:space-x-6">
             {/* Social icons placeholders */}
             <FaFacebook
@@ -534,58 +603,90 @@ function Footer() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 md:gap-14 text-sm sm:text-base text-gray-400">
           <div>
-            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Platform</h2>
+            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">
+              Platform
+            </h2>
             <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
               <li>
-                <a href="" className="hover:text-white transition-colors">Features</a>
+                <a href="" className="hover:text-white transition-colors">
+                  Features
+                </a>
               </li>
               <li>
-                <a href="" className="hover:text-white transition-colors">Testimonials</a>
+                <a href="" className="hover:text-white transition-colors">
+                  Testimonials
+                </a>
               </li>
               <li>
-                <a href="" className="hover:text-white transition-colors">FAQ</a>
+                <a href="" className="hover:text-white transition-colors">
+                  FAQ
+                </a>
               </li>
               <li>
-                <a href="" className="hover:text-white transition-colors">Pricing</a>
+                <a href="" className="hover:text-white transition-colors">
+                  Pricing
+                </a>
               </li>
             </ul>
           </div>
           <div>
-            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Resources</h2>
+            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">
+              Resources
+            </h2>
             <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
               <li>
-                <a href="" className="hover:text-white transition-colors">Blog</a>
+                <a href="" className="hover:text-white transition-colors">
+                  Blog
+                </a>
               </li>
               <li>
-                <a href="" className="hover:text-white transition-colors">Guides</a>
+                <a href="" className="hover:text-white transition-colors">
+                  Guides
+                </a>
               </li>
               <li>
-                <a href="" className="hover:text-white transition-colors">Webinar</a>
+                <a href="" className="hover:text-white transition-colors">
+                  Webinar
+                </a>
               </li>
               <li>
-                <a href="" className="hover:text-white transition-colors">Support</a>
+                <a href="" className="hover:text-white transition-colors">
+                  Support
+                </a>
               </li>
             </ul>
           </div>
           <div>
-            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Company</h2>
+            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">
+              Company
+            </h2>
             <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
               <li>
-                <a href="" className="hover:text-white transition-colors">About Us</a>
+                <a href="" className="hover:text-white transition-colors">
+                  About Us
+                </a>
               </li>
               <li>
-                <a href="" className="hover:text-white transition-colors">Careers</a>
+                <a href="" className="hover:text-white transition-colors">
+                  Careers
+                </a>
               </li>
               <li>
-                <a href="" className="hover:text-white transition-colors">Press Kit</a>
+                <a href="" className="hover:text-white transition-colors">
+                  Press Kit
+                </a>
               </li>
               <li>
-                <a href="" className="hover:text-white transition-colors">Contact</a>
+                <a href="" className="hover:text-white transition-colors">
+                  Contact
+                </a>
               </li>
             </ul>
           </div>
           <div>
-            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Contact Us</h2>
+            <h2 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">
+              Contact Us
+            </h2>
             <address className="not-italic space-y-2 sm:space-y-3 text-xs sm:text-sm">
               <p>info@thryvia.com</p>
               <p>+1 (234) 567-890</p>
@@ -597,13 +698,22 @@ function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between text-xs text-gray-500 px-4 sm:px-6 md:px-20">
         <span>&copy; 2025 Thryvia. All rights reserved.</span>
         <div className="flex space-x-4 sm:space-x-6 mt-2 md:mt-0">
-          <a href="https://facebook.com" className="hover:text-white transition-colors">
+          <a
+            href="https://facebook.com"
+            className="hover:text-white transition-colors"
+          >
             Privacy Policy
           </a>
-          <a href="https://facebook.com" className="hover:text-white transition-colors">
+          <a
+            href="https://facebook.com"
+            className="hover:text-white transition-colors"
+          >
             Terms of Service
           </a>
-          <a href="https://facebook.com" className="hover:text-white transition-colors">
+          <a
+            href="https://facebook.com"
+            className="hover:text-white transition-colors"
+          >
             Cookie Policy
           </a>
         </div>
