@@ -31,7 +31,7 @@ function Header() {
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 1);
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", onScroll);
@@ -104,7 +104,7 @@ function Header() {
       {/* Mobile menu overlay */}
       {isMobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 animate-fadeIn">
-          <div className="fixed top-0 right-0 h-full w-72 bg-white shadow-lg p-6 animate-slideInRight">
+          <div className="fixed top-0 right-0 h-full w-80 bg-white/95 backdrop-blur-md border-l border-gray-200 shadow-2xl p-6 animate-slideInRight">
             <div className="flex justify-between items-center mb-8">
               <Image
                 src="/thryvia-logo.png"
@@ -115,7 +115,7 @@ function Header() {
               />
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2 rounded-md hover:bg-gray-100"
+                className="p-2 rounded-md hover:bg-gray-100 transition-colors"
               >
                 <svg
                   className="w-6 h-6"
@@ -132,11 +132,11 @@ function Header() {
                 </svg>
               </button>
             </div>
-            <ul className="space-y-4 mb-8">
+            <ul className="space-y-6 mb-8">
               <li>
                 <a
                   href="https://www.google.com"
-                  className="block text-lg font-medium text-gray-700 hover:text-orange-600"
+                  className="block text-lg font-medium text-gray-700 hover:text-orange-600 py-3 px-4 rounded-lg hover:bg-gray-50 transition-all duration-200"
                 >
                   Features
                 </a>
@@ -144,7 +144,7 @@ function Header() {
               <li>
                 <a
                   href="https://www.google.com"
-                  className="block text-lg font-medium text-gray-700 hover:text-orange-600"
+                  className="block text-lg font-medium text-gray-700 hover:text-orange-600 py-3 px-4 rounded-lg hover:bg-gray-50 transition-all duration-200"
                 >
                   Testimonials
                 </a>
@@ -152,7 +152,7 @@ function Header() {
               <li>
                 <a
                   href="https://www.google.com"
-                  className="block text-lg font-medium text-gray-700 hover:text-orange-600"
+                  className="block text-lg font-medium text-gray-700 hover:text-orange-600 py-3 px-4 rounded-lg hover:bg-gray-50 transition-all duration-200"
                 >
                   FAQ
                 </a>
@@ -160,17 +160,17 @@ function Header() {
               <li>
                 <a
                   href="https://www.google.com"
-                  className="block text-lg font-medium text-gray-700 hover:text-orange-600"
+                  className="block text-lg font-medium text-gray-700 hover:text-orange-600 py-3 px-4 rounded-lg hover:bg-gray-50 transition-all duration-200"
                 >
                   Contact
                 </a>
               </li>
             </ul>
-            <div className="space-y-3">
-              <button className="btn btn-outline w-full text-base py-3">
+            <div className="space-y-4">
+              <button className="btn btn-outline w-full text-base py-4 font-semibold">
                 <Link href="/sign-in">Login</Link>
               </button>
-              <button className="btn btn-main w-full text-base py-3">
+              <button className="btn btn-main w-full text-base py-4 font-semibold">
                 <Link href="/sign-up">Sign Up</Link>
               </button>
             </div>
@@ -184,10 +184,8 @@ function Header() {
 function Hero() {
   return (
     <section className="hero">
-      <div className="hero-box pt-8 sm:pt-0">
-        {" "}
-        {/* Top spacing now inside hero */}
-        <div className="hero-content flex flex-col items-center text-center w-full">
+      <div className="hero-box">
+        <div className="hero-content">
           <h2 className="hero-title">
             Find your{" "}
             <span className="hero-text-highlight">Path to Thriving</span> in
@@ -197,34 +195,34 @@ function Hero() {
             Enhance productivity, improve wellbeing and grow professionally with
             our simple yet powerful platform for remote workers
           </p>
-          <div className="flex hero-btns justify-center">
+          <div className="hero-btns">
             <button className="btn btn-main">Get Started</button>
             <button className="btn btn-outline">Learn More &darr;</button>
           </div>
+          <div className="hero-stats">
+            <div className="hero-stat">
+              <h2 className="hero-stat-num">10k+</h2>
+              <p className="hero-stat-text">Remote Workers</p>
+            </div>
+            <div className="hero-stat">
+              <h2 className="hero-stat-num">200+</h2>
+              <p className="hero-stat-text">Companies</p>
+            </div>
+            <div className="hero-stat">
+              <h2 className="hero-stat-num">95%</h2>
+              <p className="hero-stat-text">Satisfaction</p>
+            </div>
+          </div>
         </div>
-        <div className="flex hero-stats w-full justify-center mt-4">
-          <div className="flex hero-stat">
-            <h2 className="hero-stat-num">10k+</h2>
-            <p className="hero-stat-text">Remote Workers</p>
-          </div>
-          <div className="flex hero-stat">
-            <h2 className="hero-stat-num"> 200+</h2>
-            <p className="hero-stat-text">Companies</p>
-          </div>
-          <div className="flex hero-stat">
-            <h2 className="hero-stat-num">95%</h2>
-            <p className="hero-stat-text">Satisfaction</p>
-          </div>
+        <div className="hero-img-box">
+          <Image
+            src="/hero.jpg"
+            alt="PC hub"
+            width={600}
+            height={600}
+            className="hero-img"
+          />
         </div>
-      </div>
-      <div className="hero-img-box">
-        <Image
-          src="/hero.jpg"
-          alt="PC hub"
-          width={600}
-          height={600}
-          className="w-full rounded-[10px]"
-        />
       </div>
       <div className="hero-wave">
         <svg

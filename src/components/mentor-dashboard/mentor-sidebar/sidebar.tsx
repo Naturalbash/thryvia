@@ -20,7 +20,7 @@ const mainNavItems = [
 
 const bottomNavItems = [
   { id: "/mentor-dashboard/settings", icon: Settings, text: "Settings" },
-  { id: "logout", icon: LogOut, text: "Logout" },
+  { id: "/sign-in", icon: LogOut, text: "Logout" },
 ];
 
 type SidebarProps = {
@@ -58,7 +58,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         onClick={() => setIsMobileOpen(true)}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors shadow-lg"
         aria-label="Open sidebar menu"
-        style={{ display: isMobileOpen ? 'none' : undefined }}
+        style={{ display: isMobileOpen ? "none" : undefined }}
       >
         <Menu size={18} />
       </button>
@@ -112,11 +112,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
 
       {/* Desktop Sidebar - Always visible, hover expandable */}
       <div
-        className={
-          `hidden lg:block h-full bg-slate-800 flex flex-col flex-shrink-0
+        className={`hidden lg:block h-full bg-slate-800 flex flex-col flex-shrink-0
           transition-all duration-500 ease-in-out
-          ${isExpanded ? "w-56" : "w-16"}`
-        }
+          ${isExpanded ? "w-56" : "w-16"}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >

@@ -2,7 +2,6 @@
 
 import { useProjects } from "@/context/stats-context";
 import { filterOngoingProject } from "@/lib/utils";
-import { format } from "date-fns";
 import { ChartPie, Accessibility, History } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -13,7 +12,13 @@ export default function OngoingProject() {
   const [formattedDueDate, setFormattedDueDate] = React.useState("");
   React.useEffect(() => {
     if (project && project.due_date) {
-      setFormattedDueDate(new Date(project.due_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+      setFormattedDueDate(
+        new Date(project.due_date).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      );
     }
   }, [project]);
 
@@ -35,7 +40,9 @@ export default function OngoingProject() {
         <div className="flex justify-between items-center">
           <span className="flex gap-1.5 sm:gap-2 items-center">
             <ChartPie size={14} className="sm:w-4 sm:h-4" />
-            <p className="text-xs sm:text-sm font-semibold text-[#333]">Status</p>
+            <p className="text-xs sm:text-sm font-semibold text-[#333]">
+              Status
+            </p>
           </span>
           <span className="text-xs font-normal bg-slate-300 py-1 px-2 sm:px-4 rounded-full">
             In progress
@@ -44,7 +51,9 @@ export default function OngoingProject() {
         <div className="flex justify-between items-center">
           <span className="flex gap-1.5 sm:gap-2 items-center">
             <Accessibility size={14} className="sm:w-4 sm:h-4" />
-            <p className="text-xs sm:text-sm font-semibold text-[#333]">Assignee</p>
+            <p className="text-xs sm:text-sm font-semibold text-[#333]">
+              Assignee
+            </p>
           </span>
           <span className="flex">
             <Image
@@ -73,10 +82,15 @@ export default function OngoingProject() {
         <div className="flex justify-between items-center">
           <span className="flex gap-1.5 sm:gap-2 items-center">
             <History size={14} className="sm:w-4 sm:h-4" />
-            <p className="text-xs sm:text-sm font-semibold text-[#333]">Due Date</p>
+            <p className="text-xs sm:text-sm font-semibold text-[#333]">
+              Due Date
+            </p>
           </span>
           <span className="text-xs font-semibold py-1 px-2 sm:px-4">
-            {formattedDueDate || (project && project.due_date ? new Date(project.due_date).toLocaleDateString() : '')}
+            {formattedDueDate ||
+              (project && project.due_date
+                ? new Date(project.due_date).toLocaleDateString()
+                : "")}
           </span>
         </div>
       </div>

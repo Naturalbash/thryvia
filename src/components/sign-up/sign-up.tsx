@@ -5,6 +5,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import Logo from "next/image";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { SignUpButton } from "./sign-up-btn";
 
 interface FormData {
   firstName: string;
@@ -212,12 +213,7 @@ export default function SignUp() {
               )}
             </div>
 
-            <button
-              type="submit"
-              className="w-full py-2 sm:py-2.5 bg-slate-700 text-white font-semibold border-none rounded-lg text-xs sm:text-sm cursor-pointer hover:bg-slate-600 transition-colors duration-200 mt-2"
-            >
-              Create Account
-            </button>
+            <SignUpButton />
           </form>
 
           <div className="mt-2 sm:mt-4 text-center text-xs sm:text-sm font-semibold">

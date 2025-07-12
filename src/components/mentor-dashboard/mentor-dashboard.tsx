@@ -443,11 +443,13 @@ export const MentorDashboard = ({ currentMentor }: MentorDashboardProps) => {
                   >
                     <ArrowLeft size={24} />
                   </button>
-                  <img
+                  <Image
                     src={selectedWorker.avatar_url || "/default-avatar.png"}
                     alt={
                       selectedWorker.first_name + " " + selectedWorker.last_name
                     }
+                    width={32}
+                    height={32}
                     className="w-8 h-8 rounded-full object-cover mr-2 flex-shrink-0 ml-2 lg:ml-0"
                   />
                   <span className="font-semibold text-gray-900 truncate">

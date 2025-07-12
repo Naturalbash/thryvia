@@ -8,6 +8,7 @@ import { ChatInterface } from "./chat-interface";
 import toast from "react-hot-toast";
 import { IUser } from "@/interfaces";
 import { ArrowLeft, Menu } from "lucide-react";
+import Image from "next/image";
 
 interface Message {
   id: number;
@@ -300,9 +301,13 @@ export default function WorkersChatDashboard() {
                 </button>
               </div>
               <div className="flex items-center flex-1 min-w-0 ml-4 overflow-hidden">
-                <img
+                <Image
                   src={selectedMentor.avatar_url || "/default-avatar.png"}
-                  alt={selectedMentor.first_name + " " + selectedMentor.last_name}
+                  alt={
+                    selectedMentor.first_name + " " + selectedMentor.last_name
+                  }
+                  width={32}
+                  height={32}
                   className="w-8 h-8 rounded-full object-cover mr-2 flex-shrink-0"
                 />
                 <span className="font-semibold text-gray-900 truncate">

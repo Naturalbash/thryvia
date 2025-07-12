@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -66,7 +66,11 @@ function formatProjectDate(due_date: unknown): string {
     dateObj = due_date as Date;
   }
   if (isNaN(dateObj.getTime())) return "Invalid date";
-  return dateObj.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  return dateObj.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 
 function Project({ project }: ProjectProps) {
