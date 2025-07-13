@@ -28,31 +28,37 @@ export default function FocusTimer() {
   };
 
   // Convert total seconds back to time format
-  const getTimeFromSeconds = (totalSeconds: number): TimeInput => {
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-    return { hours, minutes, seconds };
-  };
+  // const getTimeFromSeconds = (totalSeconds: number): TimeInput => {
+  //   const hours = Math.floor(totalSeconds / 3600);
+  //   const minutes = Math.floor((totalSeconds % 3600) / 60);
+  //   const seconds = totalSeconds % 60;
+  //   return { hours, minutes, seconds };
+  // };
 
   // Format time for display
   const formatTime = (totalSeconds: number) => {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-    
+
     if (hours > 0) {
-      return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+      return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+        2,
+        "0"
+      )}:${String(seconds).padStart(2, "0")}`;
     }
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+      2,
+      "0"
+    )}`;
   };
 
   // Handle time input changes
   const handleTimeChange = (field: keyof TimeInput, value: string) => {
     const numValue = parseInt(value) || 0;
-    setTimeInput(prev => ({
+    setTimeInput((prev) => ({
       ...prev,
-      [field]: Math.max(0, numValue)
+      [field]: Math.max(0, numValue),
     }));
   };
 
@@ -68,7 +74,7 @@ export default function FocusTimer() {
 
   // Pause/Resume timer
   const toggleTimer = () => {
-    setIsRunning(prev => !prev);
+    setIsRunning((prev) => !prev);
   };
 
   // Reset timer
@@ -120,7 +126,8 @@ export default function FocusTimer() {
         Focus Timer
       </h2>
       <p className="text-xs sm:text-sm text-gray-600 text-center mb-4 sm:mb-8">
-        Set your focus time and start a productive session. Take mindful breaks to maintain momentum.
+        Set your focus time and start a productive session. Take mindful breaks
+        to maintain momentum.
       </p>
 
       {/* Time Setting Interface */}
@@ -128,40 +135,46 @@ export default function FocusTimer() {
         <div className="space-y-4 mb-4">
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <Label htmlFor="hours" className="text-xs text-gray-600">Hours</Label>
+              <Label htmlFor="hours" className="text-xs text-gray-600">
+                Hours
+              </Label>
               <Input
                 id="hours"
                 type="number"
                 min="0"
                 max="23"
                 value={timeInput.hours}
-                onChange={(e) => handleTimeChange('hours', e.target.value)}
+                onChange={(e) => handleTimeChange("hours", e.target.value)}
                 className="text-center"
                 placeholder="0"
               />
             </div>
             <div>
-              <Label htmlFor="minutes" className="text-xs text-gray-600">Minutes</Label>
+              <Label htmlFor="minutes" className="text-xs text-gray-600">
+                Minutes
+              </Label>
               <Input
                 id="minutes"
                 type="number"
                 min="0"
                 max="59"
                 value={timeInput.minutes}
-                onChange={(e) => handleTimeChange('minutes', e.target.value)}
+                onChange={(e) => handleTimeChange("minutes", e.target.value)}
                 className="text-center"
                 placeholder="25"
               />
             </div>
             <div>
-              <Label htmlFor="seconds" className="text-xs text-gray-600">Seconds</Label>
+              <Label htmlFor="seconds" className="text-xs text-gray-600">
+                Seconds
+              </Label>
               <Input
                 id="seconds"
                 type="number"
                 min="0"
                 max="59"
                 value={timeInput.seconds}
-                onChange={(e) => handleTimeChange('seconds', e.target.value)}
+                onChange={(e) => handleTimeChange("seconds", e.target.value)}
                 className="text-center"
                 placeholder="0"
               />
@@ -186,7 +199,7 @@ export default function FocusTimer() {
           <p className="text-center text-xs sm:text-sm text-gray-500">
             {isBreak ? "Break Time" : "Focus Session"}
           </p>
-          
+
           {/* Timer Controls */}
           <div className="flex gap-2">
             <Button
