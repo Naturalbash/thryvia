@@ -8,12 +8,12 @@ export default function SignIn() {
     <div>
       <main className="bg-[#f0f2f5] flex flex-col justify-center items-center min-h-screen p-4">
         <div className="flex flex-col items-center justify-center w-full max-w-md">
-          <Logo 
-            src="/logo.png" 
-            alt="Thyryvia Logo" 
-            width={140} 
-            height={70} 
-            className="mb-4 w-24 h-12 sm:w-32 sm:h-16 md:w-36 md:h-20" 
+          <Logo
+            src="/logo.png"
+            alt="Thyryvia Logo"
+            width={140}
+            height={70}
+            className="mb-4 w-24 h-12 sm:w-32 sm:h-16 md:w-36 md:h-20"
           />
           <div className="bg-[#fff] p-6 sm:p-8 rounded-xl shadow-lg w-full">
             <h2 className="text-xl sm:text-2xl tracking-wide text-slate-700 font-bold text-center mb-6 sm:mb-8">
