@@ -53,7 +53,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Mobile Menu Button - Fixed position, top left */}
       <button
         onClick={() => setIsMobileOpen(true)}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors shadow-lg"
@@ -63,7 +62,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         <Menu size={18} />
       </button>
 
-      {/* Mobile Sidebar Overlay */}
       <div
         className={
           `lg:hidden fixed inset-0 z-40 transition-transform duration-500 ease-in-out ` +
@@ -80,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             <X size={18} />
           </button>
           <SidebarHeader isExpanded={true} />
-          <nav className="flex flex-col flex-1 px-2">
+          <nav className="flex-1 flex flex-col px-2">
             <div className="py-2">
               {mainNavItems.map((item) => (
                 <SidebarItem
@@ -93,7 +91,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                 />
               ))}
             </div>
-            <div className="mt-auto mb-5">
+            <div className="mt-auto mb-5 flex flex-col gap-2">
               {bottomNavItems.map((item) => (
                 <SidebarItem
                   id={item.id}
@@ -110,16 +108,14 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </div>
       </div>
 
-      {/* Desktop Sidebar - Always visible, hover expandable */}
       <div
-        className={`hidden lg:block h-full bg-slate-800 flex flex-col flex-shrink-0
+        className={`hidden lg:flex h-full bg-slate-800 flex-col flex-shrink-0
           transition-all duration-500 ease-in-out
           ${isExpanded ? "w-56" : "w-16"}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <SidebarHeader isExpanded={isExpanded} />
-        {/* Toggle Button */}
         <button
           onClick={toggleSidebar}
           className="p-2 m-2 bg-gray-200 rounded-lg hover:bg-gray-500 transition-colors flex justify-center"
@@ -127,7 +123,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         >
           {isExpanded ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
         </button>
-        <nav className="flex flex-col flex-1 px-2">
+        <nav className="flex-1 flex flex-col px-2">
           <div className="py-2">
             {mainNavItems.map((item) => (
               <SidebarItem
@@ -140,7 +136,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               />
             ))}
           </div>
-          <div className="mt-auto mb-5">
+          <div className="mt-auto mb-5 flex flex-col gap-2">
             {bottomNavItems.map((item) => (
               <SidebarItem
                 id={item.id}

@@ -196,7 +196,9 @@ function Hero() {
             our simple yet powerful platform for remote workers
           </p>
           <div className="hero-btns">
-            <button className="btn btn-main">Get Started</button>
+            <button className="btn btn-main">
+              <Link href="/sign-up">Get Started</Link>
+            </button>
             <button className="btn btn-outline">Learn More &darr;</button>
           </div>
           <div className="hero-stats">

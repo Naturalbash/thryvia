@@ -81,7 +81,8 @@ export default function SignUp() {
       return;
     }
 
-    router.push("/confirm-signup");
+    // Redirect with user ID as query param
+    router.push(`/confirm-signup?id=${user.user?.id}`);
   };
 
   return (

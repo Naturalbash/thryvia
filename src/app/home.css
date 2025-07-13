@@ -255,7 +255,7 @@
   font-size: 24px;
   color: #222;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   line-height: 1.1;
   letter-spacing: -0.5px;
 }
@@ -307,7 +307,7 @@
 .hero-subtitle {
   font-size: 14px;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   color: #333;
   font-weight: 400;
 }
@@ -337,7 +337,7 @@
   display: flex;
   justify-content: flex-start;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
