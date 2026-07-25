@@ -10,7 +10,7 @@ export function SignUpButton() {
     <Button
       disabled={pending}
       type="submit"
-      className="w-full flex justify-center items-center py-2 bg-slate-700 text-white font-semibold border-none rounded-sm text-md cursor-pointer hover:bg-slate-600 transition"
+      className="w-full flex justify-center items-center py-2 bg-slate-800 text-white font-semibold border-none rounded-sm text-md cursor-pointer hover:bg-slate-500 transition"
     >
       {pending ? <Loader className="animate-spin" /> : "Create Account"}
     </Button>
